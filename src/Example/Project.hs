@@ -1,13 +1,7 @@
-module Example.Project (topEntity, plus) where
+module Example.Project (topEntity) where
 
 import Clash.Prelude
-
--- | Add two numbers. Example:
---
--- >>> plus 3 5
--- 8
-plus :: Signed 8 -> Signed 8 -> Signed 8
-plus a b = a + b
+import Example.DFF
 
 -- | 'topEntity' is Clash's equivalent of 'main' in other programming
 -- languages. Clash will look for it when compiling 'Example.Project'
@@ -15,5 +9,13 @@ plus a b = a + b
 -- Clash projects, a 'topEntity' must be monomorphic and must use non-
 -- recursive types. Or, to put it hand-wavily, a 'topEntity' must be
 -- translatable to a static number of wires.
-topEntity :: Signed 8 -> Signed 8 -> Signed 8
-topEntity = plus
+topEntity ::
+  "clock"  ::: Clock System ->
+  "reset"  ::: Reset System ->
+  "enable" ::: Enable System ->
+  "drst"   ::: Signal System Bool ->
+  Signal System (Signed 8) ->
+  Signal System (Signed 8) ->
+  Signal System (Signed 8)
+topEntity clock reset en drst d a =
+  exposeClockResetEnable (dff (0 :: Signed 8) drst d a) clock reset en

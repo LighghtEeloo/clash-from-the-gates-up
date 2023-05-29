@@ -83,23 +83,35 @@ library
   hs-source-dirs: src
   exposed-modules:
     Example.Project
+    Example.DFF
+    ISR.Project
+    ISR.Mult
+  other-modules:
   default-language: Haskell2010
 
--- Builds the executable 'clash', with simple project in scope
-executable clash
-  main-is: bin/Clash.hs
+-- Builds the executable 'simple', with simple project in scope
+executable simple
+  main-is: bin/Simple.hs
   default-language: Haskell2010
   Build-Depends: base, clash-ghc, simple
   if !os(Windows)
     ghc-options: -dynamic
 
--- Builds the executable 'clashi', with simple project in scope
+-- Builds the executable 'clash'
+executable clash
+  main-is: bin/Clash.hs
+  default-language: Haskell2010
+  Build-Depends: base, clash-ghc
+  if !os(Windows)
+    ghc-options: -dynamic
+
+-- Builds the executable 'clashi'
 executable clashi
   main-is: bin/Clashi.hs
   default-language: Haskell2010
   if !os(Windows)
     ghc-options: -dynamic
-  build-depends: base, clash-ghc, simple
+  build-depends: base, clash-ghc
 
 test-suite doctests
   type:             exitcode-stdio-1.0
