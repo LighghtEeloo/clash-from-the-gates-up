@@ -17,15 +17,16 @@ data MultOutput = MultOutput
   }
   deriving (Generic, NFDataX)
 
-mult ::
-  (HiddenClockResetEnable dom) =>
-  Signal dom MultInput ->
-  Signal dom MultOutput
-mult input =
-  ( \MultInput {mcand, mplier, start = _} ->
+multPure :: MultInput -> MultOutput
+multPure MultInput {mcand, mplier, start = _} =
       MultOutput
         { prod = mcand * mplier,
           done = True
         }
-  )
-    <$> input
+
+mult ::
+  (HiddenClockResetEnable dom) =>
+  Signal dom MultInput ->
+  Signal dom MultOutput
+mult = fmap multPure
+
