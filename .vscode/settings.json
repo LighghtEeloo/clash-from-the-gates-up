@@ -13,11 +13,13 @@
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
     "editor.tabSize": 2,
-    "haskell.ghcupExecutablePath": "/root/.ghcup/bin/ghcup",
     "files.autoSave": "afterDelay",
-    "ormolu.path": "/root/.cabal/bin/ormolu",
-    "ormolu.args": [
-        "-i",
-    ],
-    "haskell.manageHLS": "GHCup"
+    "haskell.ghcupExecutablePath": "/root/.ghcup/bin/ghcup",
+    "haskell.manageHLS": "GHCup",
+    "haskell.toolchain": {
+        "hls": "1.10.0.0",
+        "ghc": "9.0.2",
+    //     "cabal": null,
+    //     "stack": null
+    }
 }
