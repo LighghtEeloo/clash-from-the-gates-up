@@ -5,4 +5,3 @@ import Test.DocTest (mainFromCabal)
 
 main :: IO ()
 main = mainFromCabal "simple" =<< getArgs
-

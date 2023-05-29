@@ -86,6 +86,7 @@ library
     Example.DFF
     ISR.Project
     ISR.Mult
+    ISR.StagedMult
   other-modules:
   default-language: Haskell2010
 

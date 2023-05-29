@@ -10,10 +10,10 @@ import Example.DFF
 -- recursive types. Or, to put it hand-wavily, a 'topEntity' must be
 -- translatable to a static number of wires.
 topEntity ::
-  "clock"  ::: Clock System ->
-  "reset"  ::: Reset System ->
+  "clock" ::: Clock System ->
+  "reset" ::: Reset System ->
   "enable" ::: Enable System ->
-  "drst"   ::: Signal System Bool ->
+  "drst" ::: Signal System Bool ->
   Signal System (Signed 8) ->
   Signal System (Signed 8) ->
   Signal System (Signed 8)
