@@ -4,21 +4,17 @@ import Clash.Prelude hiding (init)
 -- import Control.Lens
 import qualified ISR.StagedMult as Staged
 
-newtype Input = Input
-  { runInput ::
-      ( "mcand" ::: Unsigned 64,
-        "mplier" ::: Unsigned 64,
-        "start" ::: Bool
-      )
+data Input = Input
+  { _mcand :: "mcand" ::: Unsigned 64,
+    _mplier :: "mplier" ::: Unsigned 64,
+    _start :: "start" ::: Bool
   }
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
 
-newtype Output = Output
-  { runOutput ::
-      ( "prod" ::: Unsigned 64,
-        "done" ::: Bool
-      )
+data Output = Output
+  { _prod :: "prod" ::: Unsigned 64,
+    _done :: "done" ::: Bool
   }
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
@@ -26,7 +22,7 @@ newtype Output = Output
 mult :: (HiddenClockResetEnable dom) => Signal dom Input -> Signal dom Output
 mult input = output
   where
-    (mcand, mplier, start) = unbundle $ runInput <$> input
+    (mcand, mplier, start) = (_mcand <$> input, _mplier <$> input, _start <$> input)
     init = Staged.Output <$> prod <*> start
       where
         prod = Staged.ProdBundle <$> partial <*> mplier <*> mcand
@@ -39,7 +35,5 @@ mult input = output
     stagedOut = foldl wire init $ map (const ()) (indices d8)
     output =
       Output
-        <$> bundle
-          ( Staged._prod <$> (Staged._prods_out <$> stagedOut),
-            Staged._done <$> stagedOut
-          )
+        <$> (Staged._prod . Staged._prods_out <$> stagedOut)
+        <*> (Staged._done <$> stagedOut)

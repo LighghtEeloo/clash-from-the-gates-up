@@ -7,9 +7,9 @@ import Control.Lens hiding (op)
 -- import Data.Monoid.Generic
 
 data ProdBundle = ProdBundle
-  { _prod :: Unsigned 64,
-    _mplier :: Unsigned 64,
-    _mcand :: Unsigned 64
+  { _prod :: "prod" ::: Unsigned 64,
+    _mplier :: "mplier" ::: Unsigned 64,
+    _mcand :: "mcand" ::: Unsigned 64
   }
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
@@ -17,8 +17,8 @@ data ProdBundle = ProdBundle
 makeLenses ''ProdBundle
 
 data Input = Input
-  { _start :: Bool,
-    _prods_in :: ProdBundle
+  { _start :: "start" ::: Bool,
+    _prods_in :: "prod" ::: ProdBundle
   }
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
@@ -26,8 +26,8 @@ data Input = Input
 makeLenses ''Input
 
 data Output = Output
-  { _prods_out :: ProdBundle,
-    _done :: Bool
+  { _prods_out :: "prod" ::: ProdBundle,
+    _done :: "done" ::: Bool
   }
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
