@@ -89,12 +89,16 @@ library
     ISR.StagedMult
   other-modules:
   default-language: Haskell2010
+  build-depends:
+    lens
+    -- mtl,
+    -- generic-monoid
 
 -- Builds the executable 'simple', with simple project in scope
 executable simple
   main-is: bin/Simple.hs
   default-language: Haskell2010
-  Build-Depends: base, clash-ghc, simple
+  build-depends: base, clash-ghc, simple
   if !os(Windows)
     ghc-options: -dynamic
 
@@ -102,7 +106,7 @@ executable simple
 executable clash
   main-is: bin/Clash.hs
   default-language: Haskell2010
-  Build-Depends: base, clash-ghc
+  build-depends: base, clash-ghc
   if !os(Windows)
     ghc-options: -dynamic
 
