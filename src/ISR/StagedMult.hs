@@ -1,4 +1,5 @@
--- {-# LANGUAGE NamedFieldPuns, RecordWildCards, DuplicateRecordFields #-}
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE RecordWildCards #-}
 
 module ISR.StagedMult (staged, Input, Output, ProdBundle) where
 
@@ -50,24 +51,19 @@ staged :: (HiddenClockResetEnable dom) => Signal dom Input -> Signal dom Output
 staged = moore trans output init
   where
     trans (s :: State) (i :: Input) =
-      State
-        { _prod_s =
-            ProdBundle
-              { _prod = i ^. (prods_in . prod),
-                _mplier = i ^. (prods_in . mplier) `shiftR` 8,
-                _mcand = i ^. (prods_in . mcand) `shiftL` 8
-              },
-          _partial = s ^. partial,
-          _done_s = i ^. start
-        }
+      s
+        & prod_s
+          .~ ( i ^. prods_in
+                 & mplier %~ (`shiftR` 8)
+                 & mcand %~ (`shiftL` 8)
+             )
+        & done_s
+          .~ i ^. start
     output (s :: State) =
       Output
         { _prods_out =
-            ProdBundle
-              { _prod = s ^. partial + s ^. (prod_s . prod),
-                _mplier = s ^. (prod_s . mplier),
-                _mcand = s ^. (prod_s . mcand)
-              },
+            s ^. prod_s
+              & prod %~ (+ s ^. partial),
           _done = s ^. done_s
         }
     init :: State =
