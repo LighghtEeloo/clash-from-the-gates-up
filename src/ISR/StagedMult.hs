@@ -1,6 +1,3 @@
-{-# LANGUAGE NamedFieldPuns #-}
-{-# LANGUAGE RecordWildCards #-}
-
 module ISR.StagedMult (staged, Input, Output, ProdBundle) where
 
 import Clash.Prelude hiding (init)
@@ -35,7 +32,7 @@ data Output = Output
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
 
-makeLenses ''Output
+-- makeLenses ''Output
 
 data State = State
   { _prod_s :: ProdBundle,
@@ -61,11 +58,10 @@ staged = moore trans output init
           .~ i ^. start
     output (s :: State) =
       Output
-        { _prods_out =
-            s ^. prod_s
-              & prod %~ (+ s ^. partial),
-          _done = s ^. done_s
-        }
+        ( s ^. prod_s
+            & prod %~ (+ s ^. partial)
+        )
+        (s ^. done_s)
     init :: State =
       State
         { _prod_s = ProdBundle 0 0 0,
