@@ -10,3 +10,5 @@ cradle:
       component: "simple:exe:clashi"
     - path: "./bin/Clash.hs"
       component: "simple:exe:clash"
+    - path: "./bin/Simple.hs"
+      component: "simple:exe:simple"
