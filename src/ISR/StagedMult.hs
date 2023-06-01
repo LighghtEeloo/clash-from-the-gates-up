@@ -1,4 +1,4 @@
-module ISR.StagedMult (staged, Input, Output, ProdBundle) where
+module ISR.StagedMult where
 
 import Clash.Prelude hiding (init)
 import Control.Lens hiding (op)
@@ -32,7 +32,7 @@ data Output = Output
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
 
--- makeLenses ''Output
+makeLenses ''Output
 
 data State = State
   { _prod_s :: ProdBundle,
