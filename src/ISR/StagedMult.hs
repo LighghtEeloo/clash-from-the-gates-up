@@ -44,6 +44,25 @@ data State = State
 
 makeLenses ''State
 
+trans :: State -> Input -> State
+trans state input =
+  state
+    & prod_s
+      .~ ( input ^. prods_in
+             & mplier %~ (`shiftR` 8)
+             & mcand %~ (`shiftL` 8)
+         )
+    & done_s
+      .~ input ^. start
+
+output :: State -> Output
+output state =
+  Output
+    ( state ^. prod_s
+        & prod %~ (+ state ^. partial)
+    )
+    (state ^. done_s)
+
 init :: State
 init =
   State
@@ -51,21 +70,5 @@ init =
     0
     False
 
-staged :: (HiddenClockResetEnable dom) => Reset dom -> Signal dom Input -> Signal dom Output
-staged _reset = moore trans output init
-  where
-    trans (state :: State) (input :: Input) =
-      state
-        & prod_s
-          .~ ( input ^. prods_in
-                 & mplier %~ (`shiftR` 8)
-                 & mcand %~ (`shiftL` 8)
-             )
-        & done_s
-          .~ input ^. start
-    output (state :: State) =
-      Output
-        ( state ^. prod_s
-            & prod %~ (+ state ^. partial)
-        )
-        (state ^. done_s)
+staged :: (HiddenClockResetEnable dom) => Signal dom Input -> Signal dom Output
+staged = moore trans output init

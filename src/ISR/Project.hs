@@ -11,6 +11,6 @@ topEntity ::
   "input" ::: Signal System Mult.Input ->
   "output" ::: Signal System Mult.Output
 topEntity clock reset en input =
-  exposeClockResetEnable (Mult.mult reset input) clock reset en
+  exposeClockResetEnable (Mult.mult input) clock reset en
 
 makeTopEntityWithName 'topEntity "ISR"

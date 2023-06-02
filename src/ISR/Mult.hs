@@ -23,8 +23,8 @@ data Output = Output
 
 -- makeLenses ''Output
 
-mult :: (HiddenClockResetEnable dom) => Reset dom -> Signal dom Input -> Signal dom Output
-mult reset input = output
+mult :: (HiddenClockResetEnable dom) => Signal dom Input -> Signal dom Output
+mult input = output
   where
     init = Staged.Output <$> prod_init <*> (view start <$> input)
       where
@@ -35,7 +35,7 @@ mult reset input = output
             <*> (view mcand <$> input)
         partial = pure 0
     wire out () =
-      Staged.staged reset stagedInput
+      Staged.staged stagedInput
       where
         stagedInput =
           Staged.Input

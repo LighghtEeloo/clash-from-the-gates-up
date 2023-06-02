@@ -3,9 +3,12 @@ import System.Environment (getArgs)
 import Prelude
 
 main :: IO ()
-main =
+main = do
   defaultMain
     [ "--systemverilog",
-      -- "src/Example/Project.hs"
+      "src/Example/Project.hs"
+    ]
+  defaultMain
+    [ "--systemverilog",
       "src/ISR/Project.hs"
     ]

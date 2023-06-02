@@ -1,5 +1,6 @@
 module Example.Project (topEntity) where
 
+import Clash.Annotations.TH
 import Clash.Prelude
 import Example.DFF
 
@@ -14,8 +15,10 @@ topEntity ::
   "reset" ::: Reset System ->
   "enable" ::: Enable System ->
   "drst" ::: Signal System Bool ->
-  Signal System (Signed 8) ->
-  Signal System (Signed 8) ->
-  Signal System (Signed 8)
+  "default" ::: Signal System (Signed 8) ->
+  "input" ::: Signal System (Signed 8) ->
+  "output" ::: Signal System (Signed 8)
 topEntity clock reset en drst d a =
   exposeClockResetEnable (dff (0 :: Signed 8) drst d a) clock reset en
+
+makeTopEntityWithName 'topEntity "DffDefault"

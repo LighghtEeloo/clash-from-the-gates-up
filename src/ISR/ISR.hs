@@ -40,9 +40,6 @@ data State = State
 
 makeLenses ''State
 
-init :: State
-init = State False 0 0 0
-
 trans :: State -> Input -> (State, Output)
 trans stateLast input =
   (state, output)
@@ -55,6 +52,9 @@ trans stateLast input =
       Output
         (stateLast ^. result)
         (stateLast ^. mask == 0)
+
+init :: State
+init = State False 0 0 0
 
 isr :: (HiddenClockResetEnable dom) => "input" ::: Signal dom Input -> "output" ::: Signal dom Output
 isr = mealy trans init
