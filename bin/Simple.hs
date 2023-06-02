@@ -6,6 +6,6 @@ main :: IO ()
 main =
   defaultMain
     [ "--systemverilog",
-      -- , "src/Example/Project.hs"
+      -- "src/Example/Project.hs"
       "src/ISR/Project.hs"
     ]

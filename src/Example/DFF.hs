@@ -13,6 +13,3 @@ dff ::
 dff d drst dd a = register d a'
   where
     a' = mux drst dd a
-
--- a' = (\drst_val dd a -> if drst_val then dd else a) <$> (drst <*> dd <*> a)
--- (drst ? dd : a)
