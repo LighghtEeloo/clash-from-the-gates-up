@@ -23,8 +23,8 @@ data Output = Output
 
 -- makeLenses ''Output
 
-mult :: (HiddenClockResetEnable dom) => Signal dom Input -> Signal dom Output
-mult input = output
+mult :: (HiddenClockResetEnable dom) => Reset dom -> Signal dom Input -> Signal dom Output
+mult reset input = output
   where
     init = Staged.Output <$> prod_init <*> (view start <$> input)
       where
@@ -35,12 +35,12 @@ mult input = output
             <*> (view mcand <$> input)
         partial = pure 0
     wire out () =
-      Staged.staged stagedInput
+      Staged.staged reset stagedInput
       where
         stagedInput =
           Staged.Input
-            <$> (Staged._done <$> out)
-            <*> (Staged._prods_out <$> out)
+            <$> (view Staged.done <$> out)
+            <*> (view Staged.prods_out <$> out)
     stagedOut = foldl wire init $ map (const ()) (indices d8)
     output =
       Output

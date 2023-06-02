@@ -85,6 +85,7 @@ library
     Example.Project
     Example.DFF
     ISR.Project
+    ISR.ISR
     ISR.Mult
     ISR.StagedMult
   other-modules:

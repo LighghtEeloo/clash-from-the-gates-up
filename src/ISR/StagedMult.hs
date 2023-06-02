@@ -51,8 +51,8 @@ init =
     0
     False
 
-staged :: (HiddenClockResetEnable dom) => Signal dom Input -> Signal dom Output
-staged = moore trans output init
+staged :: (HiddenClockResetEnable dom) => Reset dom -> Signal dom Input -> Signal dom Output
+staged _reset = moore trans output init
   where
     trans (state :: State) (input :: Input) =
       state
