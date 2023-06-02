@@ -44,5 +44,7 @@ mult reset input = output
     stagedOut = foldl wire init $ map (const ()) (indices d8)
     output =
       Output
-        <$> (Staged._prod . Staged._prods_out <$> stagedOut)
-        <*> (Staged._done <$> stagedOut)
+        <$> (view (Staged.prods_out . Staged.prod) <$> stagedOut)
+        -- <*> (stagedOut ^. to (fmap (view Staged.done)))
+        -- <*> (stagedOut & fmap (^. Staged.done))
+        <*> (view Staged.done <$> stagedOut)
