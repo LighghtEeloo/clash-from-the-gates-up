@@ -1,7 +1,7 @@
 module ISR.Mult (mult, Input, Output) where
 
 import Clash.Prelude hiding (init)
--- import Control.Lens
+import Control.Lens hiding (indices)
 import qualified ISR.StagedMult as Staged
 
 data Input = Input
@@ -12,6 +12,8 @@ data Input = Input
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
 
+makeLenses ''Input
+
 data Output = Output
   { _prod :: "prod" ::: Unsigned 64,
     _done :: "done" ::: Bool
@@ -19,19 +21,26 @@ data Output = Output
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
 
+-- makeLenses ''Output
+
 mult :: (HiddenClockResetEnable dom) => Signal dom Input -> Signal dom Output
 mult input = output
   where
-    (mcand, mplier, start) = (_mcand <$> input, _mplier <$> input, _start <$> input)
-    init = Staged.Output <$> prod <*> start
+    init = Staged.Output <$> prod_init <*> (view start <$> input)
       where
-        prod = Staged.ProdBundle <$> partial <*> mplier <*> mcand
+        prod_init =
+          Staged.ProdBundle
+            <$> partial
+            <*> (view mplier <$> input)
+            <*> (view mcand <$> input)
         partial = pure 0
     wire out () =
       Staged.staged stagedInput
       where
         stagedInput =
-          Staged.Input <$> (Staged._done <$> out) <*> (Staged._prods_out <$> out)
+          Staged.Input
+            <$> (Staged._done <$> out)
+            <*> (Staged._prods_out <$> out)
     stagedOut = foldl wire init $ map (const ()) (indices d8)
     output =
       Output
