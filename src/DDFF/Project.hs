@@ -32,4 +32,4 @@ topEntity ::
 topEntity clock reset en drst d a =
   withClockResetEnable clock reset en $ entity (0 :: Signed 8) drst d a
 
-makeTopEntityWithName 'topEntity "DefaultDff"
+makeTopEntityWithName 'topEntity "default_dff"

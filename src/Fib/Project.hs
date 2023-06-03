@@ -7,7 +7,7 @@ import Utils (monomorphizeEntity)
 
 data Input = Input
   { _value :: "value" ::: Unsigned 16,
-    _reset :: "reset" ::: Bool
+    _reset :: "rst" ::: Bool
   }
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
@@ -60,4 +60,4 @@ topEntity ::
   Signal System Output
 topEntity = monomorphizeEntity entity
 
-makeTopEntityWithName 'topEntity "Fib"
+makeTopEntityWithName 'topEntity "fib"

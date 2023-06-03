@@ -78,4 +78,4 @@ topEntity ::
   Signal System Output
 topEntity = monomorphizeEntity entity
 
-makeTopEntityWithName 'topEntity "ISR"
+makeTopEntityWithName 'topEntity "isr"
