@@ -1,9 +1,9 @@
-module ISR.Mult (entity, Input, Output) where
+module Mult.Project (entity, Input, Output) where
 
 import Clash.Annotations.TH (makeTopEntityWithName)
 import Clash.Prelude hiding (init)
 import Control.Lens hiding (indices)
-import qualified ISR.StagedMult as Staged
+import qualified Mult.Staged as Staged
 import Utils (monomorphizeEntity)
 
 data Input = Input

@@ -83,12 +83,10 @@ library
   hs-source-dirs: src
   exposed-modules:
     DDFF.Project
-    DDFF.DFF
     Fib.Project
+    Mult.Project
+    Mult.Staged
     ISR.Project
-    ISR.ISR
-    ISR.Mult
-    ISR.StagedMult
     Utils
   other-modules:
   default-language: Haskell2010

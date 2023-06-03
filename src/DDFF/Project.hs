@@ -2,7 +2,18 @@ module DDFF.Project (topEntity) where
 
 import Clash.Annotations.TH
 import Clash.Prelude
-import DDFF.DFF
+
+-- | Double Flip Flop
+entity ::
+  (HiddenClockResetEnable dom, NFDataX a) =>
+  a ->
+  Signal dom Bool ->
+  Signal dom a ->
+  Signal dom a ->
+  Signal dom a
+entity d drst dd a = register d a'
+  where
+    a' = mux drst dd a
 
 -- | 'topEntity' is Clash's equivalent of 'main' in other programming
 -- languages. Clash will look for it when compiling 'DDFF.Project'
@@ -16,9 +27,9 @@ topEntity ::
   "enable" ::: Enable System ->
   "drst" ::: Signal System Bool ->
   "default" ::: Signal System (Signed 8) ->
-  "input" ::: Signal System (Signed 8) ->
-  "output" ::: Signal System (Signed 8)
+  "i" ::: Signal System (Signed 8) ->
+  "o" ::: Signal System (Signed 8)
 topEntity clock reset en drst d a =
-  exposeClockResetEnable (dff (0 :: Signed 8) drst d a) clock reset en
+  withClockResetEnable clock reset en $ entity (0 :: Signed 8) drst d a
 
-makeTopEntityWithName 'topEntity "DffDefault"
+makeTopEntityWithName 'topEntity "DefaultDff"

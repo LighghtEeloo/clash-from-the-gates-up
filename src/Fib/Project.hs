@@ -6,8 +6,8 @@ import Control.Lens
 import Utils (monomorphizeEntity)
 
 data Input = Input
-  { _value :: Unsigned 16,
-    _reset :: Bool
+  { _value :: "value" ::: Unsigned 16,
+    _reset :: "reset" ::: Bool
   }
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
@@ -24,7 +24,7 @@ data State = State
 
 makeLenses ''State
 
-newtype Output = Output (Unsigned 64)
+newtype Output = Output ("result" ::: Unsigned 64)
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
 
@@ -56,8 +56,8 @@ topEntity ::
   "clock" ::: Clock System ->
   "reset" ::: Reset System ->
   "enable" ::: Enable System ->
-  "i" ::: Signal System Input ->
-  "o" ::: Signal System Output
+  Signal System Input ->
+  Signal System Output
 topEntity = monomorphizeEntity entity
 
 makeTopEntityWithName 'topEntity "Fib"

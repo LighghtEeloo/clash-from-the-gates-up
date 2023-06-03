@@ -1,4 +1,4 @@
-module ISR.StagedMult where
+module Mult.Staged where
 
 import Clash.Prelude hiding (init)
 import Control.Lens hiding (op)
