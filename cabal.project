@@ -1,5 +1,5 @@
 packages:
-  simple.cabal
+  cftgu.cabal
 
 write-ghc-environment-files: always
 
