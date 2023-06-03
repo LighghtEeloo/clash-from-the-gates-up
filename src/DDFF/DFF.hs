@@ -1,4 +1,4 @@
-module Example.DFF (dff) where
+module DDFF.DFF (dff) where
 
 import Clash.Prelude
 

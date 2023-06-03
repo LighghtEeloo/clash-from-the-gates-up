@@ -1,11 +1,11 @@
-module Example.Project (topEntity) where
+module DDFF.Project (topEntity) where
 
 import Clash.Annotations.TH
 import Clash.Prelude
-import Example.DFF
+import DDFF.DFF
 
 -- | 'topEntity' is Clash's equivalent of 'main' in other programming
--- languages. Clash will look for it when compiling 'Example.Project'
+-- languages. Clash will look for it when compiling 'DDFF.Project'
 -- and translate it to HDL. While polymorphism can be used freely in
 -- Clash projects, a 'topEntity' must be monomorphic and must use non-
 -- recursive types. Or, to put it hand-wavily, a 'topEntity' must be

@@ -82,8 +82,8 @@ library
   import: common-options
   hs-source-dirs: src
   exposed-modules:
-    Example.Project
-    Example.DFF
+    DDFF.Project
+    DDFF.DFF
     Fib.Project
     ISR.Project
     ISR.ISR
@@ -140,7 +140,7 @@ test-suite test-library
   ghc-options: -threaded
   main-is: unittests.hs
   other-modules:
-    Tests.Example.Project
+    Tests.DDFF.Project
   build-depends:
     cftgu,
     QuickCheck,

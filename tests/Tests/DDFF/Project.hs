@@ -1,4 +1,4 @@
-module Tests.Example.Project where
+module Tests.DDFF.Project where
 
 import Hedgehog ((===))
 import qualified Hedgehog as H
@@ -9,7 +9,7 @@ import Test.Tasty.Hedgehog
 import Test.Tasty.TH
 import Prelude
 
--- import Example.Project (plus)
+-- import DDFF.Project (plus)
 
 -- prop_plusIsCommutative :: H.Property
 -- prop_plusIsCommutative = H.property $ do
