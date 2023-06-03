@@ -10,5 +10,13 @@ main = do
     ]
   defaultMain
     [ "--systemverilog",
+      "src/Fib/Project.hs"
+    ]
+  defaultMain
+    [ "--systemverilog",
       "src/ISR/Project.hs"
+    ]
+  defaultMain
+    [ "--systemverilog",
+      "src/ISR/ISR.hs"
     ]

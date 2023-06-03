@@ -3,6 +3,7 @@ module ISR.Project (topEntity) where
 import Clash.Annotations.TH
 import Clash.Prelude
 import qualified ISR.Mult as Mult
+import Utils (monomorphizeEntity)
 
 topEntity ::
   "clock" ::: Clock System ->
@@ -10,7 +11,6 @@ topEntity ::
   "enable" ::: Enable System ->
   "input" ::: Signal System Mult.Input ->
   "output" ::: Signal System Mult.Output
-topEntity clock reset en input =
-  exposeClockResetEnable (Mult.mult input) clock reset en
+topEntity = monomorphizeEntity Mult.entity
 
 makeTopEntityWithName 'topEntity "ISR"

@@ -1,19 +1,10 @@
-module ISR.ISR where
+module ISR.ISR (entity, topEntity, Input (..), Output (..)) where
 
+import Clash.Annotations.TH (makeTopEntityWithName)
 import Clash.Prelude hiding (init)
 import Control.Lens
-
--- A sieve for the highest bit
--- sievePure :: BitVector 16 -> Maybe (BitVector 4)
--- sievePure regs =
---   ifoldr sel Nothing xs
---   where
---     sel _ _ (Just a) = Just a
---     sel i x Nothing = if x == 1 then Just (pack i) else Nothing
---     xs = bv2v regs
-
--- sieve :: "reg_status" ::: Signal dom (BitVector 16) -> "selection" ::: Signal dom (Maybe (BitVector 4))
--- sieve = fmap sievePure
+import qualified ISR.Mult as Mult
+import Utils (monomorphizeEntity)
 
 data Input = Input
   { _value :: Unsigned 64,
@@ -22,12 +13,16 @@ data Input = Input
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
 
+makeLenses ''Input
+
 data Output = Output
   { _result_o :: "result" ::: Unsigned 32,
     _done :: "done" ::: Bool
   }
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
+
+-- makeLenses ''Output
 
 data State = State
   { _start :: "start" ::: Bool,
@@ -40,21 +35,44 @@ data State = State
 
 makeLenses ''State
 
-trans :: State -> Input -> (State, Output)
-trans stateLast input =
-  (state, output)
+trans :: State -> (Input, Mult.Output) -> (State, (Output, Mult.Input))
+trans stateLast (input, multOut) =
+  (state, (output, multIn))
   where
     proposal = state ^. result .|. unpack (state ^. mask)
     state =
-      stateLast
-        & mask %~ (`shiftR` 1)
+      if input ^. reset
+        then init
+        else case undefined of
+          LT ->
+            stateLast
+              & mask %~ (`shiftR` 1)
+          GT ->
+            undefined
+          EQ ->
+            undefined
     output =
       Output
         (stateLast ^. result)
         (stateLast ^. mask == 0)
+    multIn = undefined
 
 init :: State
 init = State False 0 0 0
 
-isr :: (HiddenClockResetEnable dom) => "input" ::: Signal dom Input -> "output" ::: Signal dom Output
-isr = mealy trans init
+entity :: (HiddenClockResetEnable dom) => Signal dom Input -> Signal dom Output
+entity input = output
+  where
+    (output, multIn) = isr (input, multOut)
+    isr = mealyB trans init
+    multOut = Mult.entity multIn
+
+topEntity ::
+  "clock" ::: Clock System ->
+  "reset" ::: Reset System ->
+  "enable" ::: Enable System ->
+  "input" ::: Signal System Input ->
+  "output" ::: Signal System Output
+topEntity = monomorphizeEntity entity
+
+makeTopEntityWithName 'topEntity "ISR"

@@ -70,5 +70,5 @@ init =
     0
     False
 
-staged :: (HiddenClockResetEnable dom) => Signal dom Input -> Signal dom Output
-staged = moore trans output init
+topEntity :: (HiddenClockResetEnable dom) => Signal dom Input -> Signal dom Output
+topEntity = moore trans output init

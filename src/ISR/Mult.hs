@@ -1,8 +1,10 @@
-module ISR.Mult (mult, Input, Output) where
+module ISR.Mult (entity, Input, Output) where
 
+import Clash.Annotations.TH (makeTopEntityWithName)
 import Clash.Prelude hiding (init)
 import Control.Lens hiding (indices)
 import qualified ISR.StagedMult as Staged
+import Utils (monomorphizeEntity)
 
 data Input = Input
   { _mcand :: "mcand" ::: Unsigned 64,
@@ -23,8 +25,8 @@ data Output = Output
 
 -- makeLenses ''Output
 
-mult :: (HiddenClockResetEnable dom) => Signal dom Input -> Signal dom Output
-mult input = output
+entity :: (HiddenClockResetEnable dom) => Signal dom Input -> Signal dom Output
+entity input = output
   where
     init = Staged.Output <$> prod_init <*> (view start <$> input)
       where
@@ -35,7 +37,7 @@ mult input = output
             <*> (view mcand <$> input)
         partial = pure 0
     wire out () =
-      Staged.staged stagedInput
+      Staged.topEntity stagedInput
       where
         stagedInput =
           Staged.Input
@@ -48,3 +50,13 @@ mult input = output
         -- <*> (stagedOut ^. to (fmap (view Staged.done)))
         -- <*> (stagedOut & fmap (^. Staged.done))
         <*> (view Staged.done <$> stagedOut)
+
+topEntity ::
+  "clock" ::: Clock System ->
+  "reset" ::: Reset System ->
+  "enable" ::: Enable System ->
+  "input" ::: Signal System Input ->
+  "output" ::: Signal System Output
+topEntity = monomorphizeEntity entity
+
+makeTopEntityWithName 'topEntity "mult"

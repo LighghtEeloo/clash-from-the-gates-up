@@ -84,10 +84,12 @@ library
   exposed-modules:
     Example.Project
     Example.DFF
+    Fib.Project
     ISR.Project
     ISR.ISR
     ISR.Mult
     ISR.StagedMult
+    Utils
   other-modules:
   default-language: Haskell2010
   build-depends:
