@@ -1,6 +1,7 @@
-{-# OPTIONS_GHC -Wno-unused-top-binds #-}
-{-# OPTIONS_GHC -Wno-unused-matches #-}
 {-# OPTIONS_GHC -Wno-unused-local-binds #-}
+{-# OPTIONS_GHC -Wno-unused-matches #-}
+{-# OPTIONS_GHC -Wno-unused-top-binds #-}
+
 module ISR.Project (topEntity) where
 
 import Clash.Annotations.TH (makeTopEntityWithName)
@@ -43,17 +44,16 @@ trans stateLast (input, multOut) =
   (state, (output, multIn))
   where
     proposal = state ^. result .|. unpack (state ^. mask)
-    state =
-      if input ^. reset
-        then init
-        else case undefined of
-          LT ->
-            stateLast
-              & mask %~ (`shiftR` 1)
-          GT ->
-            undefined
-          EQ ->
-            undefined
+    state = stateComp undefined
+    stateComp _ | input ^. reset = init
+    stateComp _ | not $ multOut ^. Mult.done = stateLast
+    stateComp LT =
+      stateLast
+        & mask %~ (`shiftR` 1)
+    stateComp GT =
+      stateLast
+    stateComp EQ =
+      stateLast
     output =
       Output
         (stateLast ^. result)

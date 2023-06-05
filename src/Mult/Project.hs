@@ -1,4 +1,4 @@
-module Mult.Project (entity, Input, Output) where
+module Mult.Project (entity, Input, Output, mcand, mplier, start, prod, done) where
 
 import Clash.Annotations.TH (makeTopEntityWithName)
 import Clash.Prelude hiding (init)
@@ -23,7 +23,7 @@ data Output = Output
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
 
--- makeLenses ''Output
+makeLenses ''Output
 
 entity :: (HiddenClockResetEnable dom) => Signal dom Input -> Signal dom Output
 entity input = output

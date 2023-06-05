@@ -20,3 +20,7 @@ main = do
     [ "--systemverilog",
       "src/ISR/Project.hs"
     ]
+  defaultMain
+    [ "--systemverilog",
+      "src/Q/Project.hs"
+    ]
