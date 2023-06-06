@@ -1,48 +1,59 @@
--- {-# LANGUAGE AllowAmbiguousTypes #-}
--- {-# LANGUAGE FlexibleInstances #-}
--- {-# LANGUAGE FlexibleContexts #-}
--- {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+module Q.Project () where
 
-module Q.Project where
-
--- import Clash.Annotations.TH (makeTopEntityWithName)
-import Clash.Prelude hiding (init)
-import Control.Lens hiding (Index, indices)
-import Q.Circular
+import Clash.Annotations.TH (makeTopEntityWithName)
+import Clash.Prelude
+import Control.Lens hiding (Index, imap, indices)
 import Utils (monomorphizeEntity)
 
-data Input pro con a = Input
-  { _producerIn :: "producer_in" ::: Arity pro,
-    _consumerIn :: "consumer_in" ::: View con a
+type Arity n = Index (n + 1)
+
+data Slice n t = Slice
+  { _entries :: Vec n t,
+    _len :: Arity n
   }
   deriving stock (Generic, Show, Eq)
   deriving anyclass (NFDataX)
 
-makeLenses ''Input
+makeLenses ''Slice
 
-data Output pro con a = Output
-  { _producerOut :: "producer_out" ::: View pro a,
-    _consumerOut :: "consumer_out" ::: Arity con
-  }
-  deriving stock (Generic, Show, Eq)
-  deriving anyclass (NFDataX)
+transfer ::
+  forall outCap inCap n a.
+  (KnownNat outCap, KnownNat inCap, KnownNat n, NFDataX a, inCap <= outCap + n) =>
+  Slice (outCap + n) a ->
+  (Arity outCap, Slice inCap a) ->
+  Slice (outCap + n) a
+transfer state (exert, influx) =
+  state
+    & entries %~ imap elementTrans
+    & len .~ len'
+  where
+    exertedLen = (state ^. len) - resize exert
+    len' = exertedLen + resize (influx ^. len)
+    elementTrans i = trans
+      where
+        i' = resize i
+        trans _ | i' < exertedLen = (state ^. entries) !! (i + resize exert)
+        trans _ | i' >= len' = undefined
+        trans _ = (influx ^. entries) !! (i' - exertedLen)
 
-makeLenses ''Output
-
-trans :: (KnownNat pro, KnownNat con, KnownNat n, NFDataX a) => State n a -> Input pro con a -> State n a
-trans s _i = s
-
-out :: (KnownNat pro, KnownNat con, KnownNat n, NFDataX a) => State n a -> Output pro con a
-out _s = undefined
+outbound ::
+  forall outCap inCap n t.
+  (KnownNat outCap, KnownNat inCap, KnownNat n, NFDataX t, inCap <= outCap + n) =>
+  Slice (outCap + n) t ->
+  (Slice outCap t, Arity inCap)
+outbound state = (efflux, insert)
+  where
+    len' = state ^. len
+    efflux = Slice (takeI (state ^. entries)) (min (natToNum @outCap) (resize len'))
+    insert = resize ((natToNum @(outCap + n)) - len')
 
 entity ::
-  (HiddenClockResetEnable dom, KnownNat pro, KnownNat con, KnownNat n, NFDataX a) =>
-  State n a ->
-  Signal dom (Input pro con a) ->
-  Signal dom (Output pro con a)
-entity = moore trans out
-
-type Width = 2
+  forall dom outCap inCap n t.
+  (HiddenClockResetEnable dom, KnownNat outCap, KnownNat inCap, KnownNat n, NFDataX t, inCap <= outCap + n) =>
+  Slice (outCap + n) t ->
+  Signal dom (Arity outCap, Slice inCap t) ->
+  Signal dom (Slice outCap t, Arity inCap)
+entity = moore transfer outbound
 
 type Data = BitVector 64
 
@@ -50,27 +61,11 @@ topEntity ::
   "clock" ::: Clock System ->
   "reset" ::: Reset System ->
   "enable" ::: Enable System ->
-  Signal System (Input Width Width Data) ->
-  Signal System (Output Width Width Data)
+  Signal System ("exert" ::: Arity 2, "influx" ::: Slice 4 Data) ->
+  Signal System ("efflux" ::: Slice 2 Data, "insert" ::: Arity 4)
 topEntity =
-  monomorphizeEntity $ entity $ State xs 0 0
+  monomorphizeEntity $ entity $ Slice entries_ 0
   where
-    xs = map (const $ unpack 0) (indices d8)
+    entries_ = map (const undefined) (indices d8)
 
--- makeTopEntityWithName 'topEntity "queue"
-{-# ANN
-  topEntity
-  Synthesize
-    { t_name = "queue",
-      t_inputs =
-        [ PortName "clock",
-          PortName "reset",
-          PortName "enable",
-          PortProduct "" [PortName "producer_in", PortName "consumer_in"]
-        ],
-      t_output =
-        PortProduct
-          ""
-          [PortName "producer_out", PortName "consumer_out"]
-    }
-  #-}
+makeTopEntityWithName 'topEntity "queue"
