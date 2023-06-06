@@ -8,11 +8,8 @@ module Q.Project where
 -- import Clash.Annotations.TH (makeTopEntityWithName)
 import Clash.Prelude hiding (init)
 import Control.Lens hiding (Index, indices)
+import Q.Circular
 import Utils (monomorphizeEntity)
-
-type Arity n = Index n
-
-type View n a = (Vec n a, Index n)
 
 data Input pro con a = Input
   { _producerIn :: "producer_in" ::: Arity pro,
@@ -22,16 +19,6 @@ data Input pro con a = Input
   deriving anyclass (NFDataX)
 
 makeLenses ''Input
-
-data State n a = State
-  { _vec :: Vec n a,
-    _head :: Index n,
-    _size :: Index n
-  }
-  deriving stock (Generic, Show, Eq)
-  deriving anyclass (NFDataX)
-
-makeLenses ''State
 
 data Output pro con a = Output
   { _producerOut :: "producer_out" ::: View pro a,
@@ -56,6 +43,7 @@ entity ::
 entity = moore trans out
 
 type Width = 2
+
 type Data = BitVector 64
 
 topEntity ::
@@ -65,14 +53,24 @@ topEntity ::
   Signal System (Input Width Width Data) ->
   Signal System (Output Width Width Data)
 topEntity =
-  monomorphizeEntity $ entity $ State xs 8 8
+  monomorphizeEntity $ entity $ State xs 0 0
   where
     xs = map (const $ unpack 0) (indices d8)
 
 -- makeTopEntityWithName 'topEntity "queue"
-{-# ANN topEntity Synthesize
-                    {t_name = "queue",
-                     t_inputs = [PortName "clock", PortName "reset", PortName "enable",
-                                 PortProduct "" [PortName "producer_in", PortName "consumer_in"]],
-                     t_output = PortProduct ""
-                                  [PortName "producer_out", PortName "consumer_out"]} #-}
+{-# ANN
+  topEntity
+  Synthesize
+    { t_name = "queue",
+      t_inputs =
+        [ PortName "clock",
+          PortName "reset",
+          PortName "enable",
+          PortProduct "" [PortName "producer_in", PortName "consumer_in"]
+        ],
+      t_output =
+        PortProduct
+          ""
+          [PortName "producer_out", PortName "consumer_out"]
+    }
+  #-}
