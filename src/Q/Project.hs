@@ -24,17 +24,14 @@ transfer ::
   Slice (outCap + n) a
 transfer state (exert, influx) =
   state
-    & entries %~ imap elementTrans
+    & entries .~ map trans indicesI
     & len .~ len'
   where
     exertedLen = (state ^. len) - resize exert
     len' = exertedLen + resize (influx ^. len)
-    elementTrans i = trans
-      where
-        i' = resize i
-        trans _ | i' < exertedLen = (state ^. entries) !! (i + resize exert)
-        trans _ | i' >= len' = undefined
-        trans _ = (influx ^. entries) !! (i' - exertedLen)
+    trans i | resize i < exertedLen = (state ^. entries) !! (i + resize exert)
+    trans i | resize i >= len' = undefined
+    trans i = (influx ^. entries) !! (resize i - exertedLen)
 
 outbound ::
   forall outCap inCap n t.
