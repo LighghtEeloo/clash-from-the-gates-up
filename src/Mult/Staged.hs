@@ -16,6 +16,10 @@ data ProdBundle = ProdBundle
 
 makeLenses ''ProdBundle
 
+times :: ProdBundle -> ProdBundle
+times pd =
+  pd & prod .~ (pd ^. mcand * pd ^. mplier)
+
 data Input = Input
   { _start :: "start" ::: Bool,
     _prods_in :: "prod" ::: ProdBundle
@@ -47,13 +51,16 @@ makeLenses ''State
 trans :: State -> Input -> State
 trans state input =
   state
+    & prod_s %~ times
     & prod_s
-      .~ ( input ^. prods_in
+      .~ ( prodBundle
              & mplier %~ (`shiftR` 8)
              & mcand %~ (`shiftL` 8)
          )
     & done_s
       .~ input ^. start
+  where
+    prodBundle = input ^. prods_in
 
 output :: State -> Output
 output state =

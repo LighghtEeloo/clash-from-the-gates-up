@@ -55,8 +55,8 @@ topEntity ::
   "clock" ::: Clock System ->
   "reset" ::: Reset System ->
   "enable" ::: Enable System ->
-  "input" ::: Signal System Input ->
-  "output" ::: Signal System Output
+  Signal System Input ->
+  Signal System Output
 topEntity = monomorphizeEntity entity
 
 makeTopEntityWithName 'topEntity "mult"
