@@ -21,5 +21,6 @@
         "ghc": "9.0.2",
     //     "cabal": null,
     //     "stack": null
-    }
+    },
+    "haskell.formattingProvider": "ormolu"
 }

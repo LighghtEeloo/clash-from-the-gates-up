@@ -1,14 +1,14 @@
-module Q.Project () where
+module Q.Project (topEntity, entity, Arity, Slice) where
 
-import Clash.Annotations.TH (makeTopEntityWithName)
+-- import Clash.Annotations.TH (makeTopEntityWithName)
 import Clash.Prelude
 import Control.Lens hiding (Index, imap, indices)
 import Utils (monomorphizeEntity)
 
-type Arity n = Index (n + 1)
+type Arity n = "arity" ::: Index (n + 1)
 
 data Slice n t = Slice
-  { _entries :: Vec n t,
+  { _entries :: "entries" ::: Vec n t,
     _len :: Arity n
   }
   deriving stock (Generic, Show, Eq)
@@ -84,4 +84,4 @@ topEntity =
   where
     entries_ = map (const undefined) (indices d8)
 
-makeTopEntityWithName 'topEntity "Queue"
+-- makeTopEntityWithName 'topEntity "Queue"
