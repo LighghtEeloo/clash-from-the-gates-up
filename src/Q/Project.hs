@@ -17,39 +17,58 @@ data Slice n t = Slice
 makeLenses ''Slice
 
 transfer ::
-  forall outCap inCap n a.
-  (KnownNat outCap, KnownNat inCap, KnownNat n, NFDataX a, inCap <= outCap + n) =>
-  Slice (outCap + n) a ->
+  forall outCap inCap cap a.
+  ( KnownNat outCap,
+    KnownNat inCap,
+    KnownNat cap,
+    NFDataX a,
+    outCap <= cap,
+    inCap <= cap
+  ) =>
+  Slice cap a ->
   (Arity outCap, Slice inCap a) ->
-  Slice (outCap + n) a
-transfer state (exert, influx) =
+  Slice cap a
+transfer state (pop, influx) =
   state
     & entries .~ map trans indicesI
     & len .~ len'
   where
-    exertedLen = (state ^. len) - resize exert
-    len' = exertedLen + resize (influx ^. len)
-    trans i | resize i < exertedLen = (state ^. entries) !! (i + resize exert)
+    afterPop = (state ^. len) - resize pop
+    len' = afterPop + resize (influx ^. len)
+    trans i | resize i < afterPop = (state ^. entries) !! (i + resize pop)
     trans i | resize i >= len' = undefined
-    trans i = (influx ^. entries) !! (resize i - exertedLen)
+    trans i = (influx ^. entries) !! (resize i - afterPop)
 
 outbound ::
-  forall outCap inCap n t.
-  (KnownNat outCap, KnownNat inCap, KnownNat n, NFDataX t, inCap <= outCap + n) =>
-  Slice (outCap + n) t ->
-  (Slice outCap t, Arity inCap)
-outbound state = (efflux, insert)
+  forall outCap inCap cap a.
+  ( KnownNat outCap,
+    KnownNat inCap,
+    KnownNat cap,
+    NFDataX a,
+    outCap <= cap,
+    inCap <= cap
+  ) =>
+  Slice (outCap + (cap - outCap)) a ->
+  (Slice outCap a, Arity inCap)
+outbound state = (efflux, push)
   where
     len' = state ^. len
     efflux = Slice (takeI (state ^. entries)) (min (natToNum @outCap) (resize len'))
-    insert = resize ((natToNum @(outCap + n)) - len')
+    push = resize ((natToNum @cap) - len')
 
 entity ::
-  forall dom outCap inCap n t.
-  (HiddenClockResetEnable dom, KnownNat outCap, KnownNat inCap, KnownNat n, NFDataX t, inCap <= outCap + n) =>
-  Slice (outCap + n) t ->
-  Signal dom (Arity outCap, Slice inCap t) ->
-  Signal dom (Slice outCap t, Arity inCap)
+  forall dom outCap inCap cap a.
+  ( HiddenClockResetEnable dom,
+    KnownNat outCap,
+    KnownNat inCap,
+    KnownNat cap,
+    NFDataX a,
+    outCap <= cap,
+    inCap <= cap
+  ) =>
+  Slice cap a ->
+  Signal dom (Arity outCap, Slice inCap a) ->
+  Signal dom (Slice outCap a, Arity inCap)
 entity = moore transfer outbound
 
 type Data = BitVector 64
@@ -58,11 +77,11 @@ topEntity ::
   "clock" ::: Clock System ->
   "reset" ::: Reset System ->
   "enable" ::: Enable System ->
-  Signal System ("exert" ::: Arity 2, "influx" ::: Slice 4 Data) ->
-  Signal System ("efflux" ::: Slice 2 Data, "insert" ::: Arity 4)
+  Signal System ("pop" ::: Arity 2, "influx" ::: Slice 4 Data) ->
+  Signal System ("efflux" ::: Slice 2 Data, "push" ::: Arity 4)
 topEntity =
   monomorphizeEntity $ entity $ Slice entries_ 0
   where
     entries_ = map (const undefined) (indices d8)
 
-makeTopEntityWithName 'topEntity "queue"
+makeTopEntityWithName 'topEntity "Queue"
