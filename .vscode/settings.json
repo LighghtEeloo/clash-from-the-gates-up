@@ -14,7 +14,6 @@
     "files.insertFinalNewline": true,
     "editor.tabSize": 2,
     "files.autoSave": "afterDelay",
-    "haskell.ghcupExecutablePath": "/root/.ghcup/bin/ghcup",
     "haskell.manageHLS": "GHCup",
     "haskell.toolchain": {
         "hls": "1.10.0.0",
