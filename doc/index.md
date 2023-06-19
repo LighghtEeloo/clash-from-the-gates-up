@@ -6,21 +6,27 @@ This is a series of [clash](https://clash-lang.org/) tutorial sessions for a har
 2. Some logic design background is needed. It would be pretty helpful if you could picture how all the circuit structures can be built into a larger device. It's recommended to recap the vending machine example (seriously?) for a self-check on state-machine background knowledge.
 3. A brave heart.
 
+See? We're friendly. Very friendly.
+
+## Roles
+
 In the following sessions, we'll play three roles: an engineer, a theorist, and an architect.
 
 1. Engineer. I want to do this. Here's my plan, safe and sound. Ok, let's go.
 2. Theorist. Why can I do this? How can I do that again generically, systematically, and ergonomically?
 3. Architect. Here's how we can utilize these components in our superscale OoO processor project.
 
+The engineer is frank, upright and practical, always straight to the destination. Usable and practical examples are very likely the engineer's work. The theorist wants more than a specific solution; a family of solutions are always welcome, and for such purpose it's important to see at least a part of the mechanisms behind the scene. The architect governs the project, staring at the blueprints and proposing high-level tasks to bring them into reality. She also has a heart for organizing and cleaning up the codebase.
+
 The paragraphs will be short and concise, within each there'll be a consistent tone from one of the three of us. Since time is running short for our four week project, there won't be too much and everything will be focused on quickly writing usable components.
 
-
+I sincerely hope that you can enjoy this trip with the accompany of the three of us : )
 
 ## Table of contents
 
-0. [Prelude: Waking Up, Loaded](./0-prelude.md)
+0. [Prelude: Waking Up, Loaded](0-prelude.md)
 1. [Gateway Drug #1: Coding by Rewriting](1-drug.md)
-2. [Machine 101: Signal, Register and Clock](2-wire.md)
+2. [Machine 101: Signal, Clock, Register and Mux](2-wire.md)
 
 ```
 Inside-Out: Functor, Applicative, Bundle, Unbundle, and Alternative

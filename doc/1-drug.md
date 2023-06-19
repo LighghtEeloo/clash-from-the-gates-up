@@ -49,30 +49,61 @@ Fun fact: you can concat all lines into one with `;`
 fib 0 = 0; fib 1 = 1; fib n = fib (n - 1) + fib (n - 2)
 ```
 
-Haskell has interesting decisions around layout (whitespaces, indentations, and line breaks).
+Haskell has interesting decisions around layout (whitespaces, indentations, and line breaks). When refactoring layout, do only what you know you're doing.
 
-## Theorist. `if` and `case`.
+## Architect. Formating.
 
-Observe: an equivalent version of `fib`, also in Haskell.
+In vscode, use builtin `Format Document` utility.
+
+Run `ormolu -i $(find . -name "*.hs")` to format all Haskell files in the repo.
+
+## Engineer. `if`, `case` and guards.
+
+Is there a good old function declaration like that in C?
+
+If you are shocked by the example above, here's an equivalent version of `fib`, also in Haskell.
 
 ```haskell
-fib n =
+fib' :: Int -> Int
+fib' n =
 	if n == 0 then 0
 	else if n == 1 then 1
-	else fib (n - 1) + fib (n - 2)
+	else fib' (n - 1) + fib' (n - 2)
 ```
 
-And another.
+Here `fib'` is just a normal variable name. You can change it to `goodFib` or `fib_` as you like. Or `f'i'b`. But not `'fib`. Also, you need to indent when writing a definition of a function.
+
+
+
+And another. But quite different in fashion, closer to the original `fib`.
 
 ```haskell
-fib n =
+fib'' :: Int -> Int
+fib'' n =
 	case n of
 		0 -> 0
 		1 -> 1
-		n -> fib (n - 1) + fib (n - 2)
+		n -> fib'' (n - 1) + fib'' (n - 2)
 ```
 
-Never mess around with layout. If you see "parse error" that's likely something about layout.
+It's called pattern matching, similar to `switch` in C but way more powerful and expressive. But remember, `case` needs . Never, ever, mess around with layout. If you see "parse error" that's likely something about layout.
+
+
+
+And another. But cursed.
+
+```haskell
+fib''' :: Int -> Int
+fib''' n | n == 0 = 0
+fib''' n | n == 1 = 1
+fib''' n = fib''' (n - 1) + fib''' (n - 2)
+```
+
+The `|` here is called guard. It means this branch of declaration is matched only if the boolean after `|` is `True`. Remember, `=` is divine, but `==` is not.
+
+
+
+You'll see more of these in the chapter about control flow.
 
 ## Conclusion
 
