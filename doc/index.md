@@ -14,3 +14,29 @@ In the following sessions, we'll play three roles: an engineer, a theorist, and 
 
 The paragraphs will be short and concise, within each there'll be a consistent tone from one of the three of us.
 
+
+
+```
+Wire, Register and Clock
+
+Signal: Functor, Applicative and Alternative
+
+Have a Bit: Signed Unsigned Index Bit BitVector
+
+Algebraic Data Type: Type and Data Constructors and Pattern
+	- how to compress valid bits into a better form
+
+Control Flow (Forking Paths): Branching, Pattern Matching and Guards
+	- if then else case and the freedom of declarative programming
+
+Vector: foldl foldr fold map and indexed version with indices and slice and split and shift
+
+Compile Time Constants: KnownNat and SNat
+	- Index
+
+Constraint: The Constitution Law for The Haskell Realm
+
+Monads: Imperative Revisited
+
+Operators and Baby Lens
+```
