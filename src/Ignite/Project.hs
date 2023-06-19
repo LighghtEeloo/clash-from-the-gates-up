@@ -3,7 +3,7 @@ module Ignite.Project (moore', mealy', moore4mealy, mealy4moore) where
 import Clash.Prelude hiding (init)
 
 moore' ::
-  (HiddenClockResetEnable dom, NFDataX s) =>
+  (HiddenClockResetEnable dom, NFDataX s, NFDataX i, NFDataX o) =>
   (s -> i -> s) ->
   (s -> o) ->
   s ->
@@ -15,7 +15,7 @@ moore' trans out init input = output
     output = out <$> state
 
 mealy' ::
-  (HiddenClockResetEnable dom, NFDataX s) =>
+  (HiddenClockResetEnable dom, NFDataX s, NFDataX i, NFDataX o) =>
   (s -> i -> (s, o)) ->
   s ->
   (Signal dom i -> Signal dom o)
@@ -25,12 +25,12 @@ mealy' trans init input = output
     (state', output) = unbundle $ trans <$> state <*> input
 
 moore4mealy ::
-  (HiddenClockResetEnable dom, NFDataX s) =>
+  (HiddenClockResetEnable dom, NFDataX s, NFDataX i, NFDataX o) =>
   ((s -> i -> s) -> (s -> o) -> s -> Signal dom i -> Signal dom o)
 moore4mealy trans out = mealy (\s i -> (trans s i, out s))
 
 mealy4moore ::
-  (HiddenClockResetEnable dom, NFDataX s, NFDataX i) =>
+  (HiddenClockResetEnable dom, NFDataX s, NFDataX i, NFDataX o) =>
   ((s -> i -> (s, o)) -> (s, i) -> Signal dom i -> Signal dom o)
 mealy4moore trans =
   moore
