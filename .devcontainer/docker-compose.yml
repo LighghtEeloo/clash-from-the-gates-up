@@ -1,0 +1,7 @@
+services:
+  workspace:
+    build: .
+    volumes:
+      - ..:/clash-from-the-gates-up
+    # Prevent container from instantly exiting, allowing us to attach terminal
+    command: /bin/sh -c "sleep infinity"

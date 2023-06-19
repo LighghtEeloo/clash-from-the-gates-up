@@ -1,0 +1,44 @@
+{
+    "name": "Clash From the Gates Up",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "workspace",
+    "workspaceFolder": "/clash-from-the-gates-up",
+    "remoteUser": "root",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "verilog.linting.linter": "verilator",
+                "verilog.linting.verilator.arguments": "--timing --trace -Iinclude -y src",
+                "verilog.formatting.iStyleVerilogFormatter.style": "GNU",
+                "files.exclude": {
+                    "**/*.dyn_hi": true,
+                    "**/*.dyn_o": true,
+                    "**/*.hi": true,
+                    "**/*.o": true,
+                    "**/dist-newstyle": true,
+                    "**/.stack-work": true,
+                    "**/.ghc.environment.*": true,
+                    "**/*.o-boot": true,
+                    "**/*.hi-boot": true
+                },
+                "files.trimTrailingWhitespace": true,
+                "files.insertFinalNewline": true,
+                "editor.tabSize": 2,
+                "files.autoSave": "afterDelay",
+                "haskell.ghcupExecutablePath": "/root/.ghcup/bin/ghcup",
+                "haskell.manageHLS": "GHCup",
+                "haskell.toolchain": {
+                    "hls": "1.10.0.0",
+                    "ghc": "9.0.2"
+                }
+            },
+            "extensions": [
+                "ms-azuretools.vscode-docker",
+                "haskell.haskell",
+                "mshr-h.veriloghdl",
+                "ms-python.python",
+                "bitwisecook.tcl"
+            ]
+        }
+    }
+}

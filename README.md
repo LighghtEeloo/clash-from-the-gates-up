@@ -4,6 +4,8 @@ A Clash tutorial for an average bit-gate master who happens to be a Haskell infa
 
 ## Development Cycle
 
+Optionally, use vscode. Run devcontainer when prompted.
+
 To build, run
 
 ```sh
