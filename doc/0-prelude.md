@@ -18,7 +18,7 @@ It's actually called a `module`.
 
 1. Go to `*.cabal` file under project root.
 2. Search for `exposed-modules` under `library`.
-3. Add the file, with or without `.hs`. Both are the same effect.
+3. Add the file, with or without `.hs`. Both have the same effect.
 
 ## Theorist. Documentations.
 

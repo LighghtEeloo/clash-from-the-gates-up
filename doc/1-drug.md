@@ -12,7 +12,7 @@ fib 1 = 1
 fib n = fib (n - 1) + fib (n - 2)
 ```
 
-We're defining the `fib` function which takes an integer and returns an integer, or in Haskell, `Int -> Int`. Here every line is a piece of definition, and we need to take all lines into account for the function to be meaningful. Each line is responsible for a case of input ranging from `0`, `1` or `n`, from top to bottom. `n` is a variable that covers all other cases that is not `0` or `1`. It will be called if the input is neither `0` nor `1`. To use it, you can call the function like `fib 9`, and the result will be `34`. If you evaluate `fib 8` or `fib 10`, the result will be `21` or `55`, accordingly.
+We're defining the `fib` function which takes an integer and returns an integer, or in Haskell, `Int -> Int`. Here every line is a piece of definition, and we need to take all lines into account for the function to be meaningful. Each line is responsible for a case of input ranging from `0`, `1` or `n`, from top to bottom. `n` is a variable that covers all other cases that is neither `0` nor `1`. It will be called if the input is again neither `0` nor `1`. To use it, you can call the function like `fib 9`, and the result will be `34`. If you evaluate `fib 8` or `fib 10`, the result will be `21` or `55`, accordingly.
 
 This is actually a slow version, but it's definitely trivial to write.
 
@@ -35,11 +35,11 @@ fib 1 = 1
 fib n = fib (n - 1) + fib (n - 2)
 ```
 
-Just kidding. You should add it for every top-level term declaration, and the compiler will yell at you if you don't. But no, I wasn't kidding; I was just saying that most terms are __fun__ctions.
+Just kidding. You should add it for every top-level term declaration, and the compiler will yell at you if you don't. But no, I wasn't kidding; I was just saying that most terms are **fun**ctions.
 
 "`::` is hard to type!"
 
-Yeah, the language designers think the same, but they designed `::` to be type declaration delibrately anyways. Because they thought a _real_ type system should be invisible to the users and understand every assumption the programmer wants to say with little or no help from the programmer. Look at how things are changing in decades.
+Yeah, the language designers think the same, but they designed `::` to be type declaration delibrately anyways. Because they thought a *real* type system should be invisible to the users and understand every assumption the programmer wants to say with little or no help from the programmer. Look at how things are changing in decades.
 
 ## Theorist. Layout.
 
@@ -86,7 +86,7 @@ fib'' n =
 		n -> fib'' (n - 1) + fib'' (n - 2)
 ```
 
-It's called pattern matching, similar to `switch` in C but way more powerful and expressive. But remember, `case` needs . Never, ever, mess around with layout. If you see "parse error" that's likely something about layout.
+It's called pattern matching, similar to `switch` in C but way more powerful and expressive. But remember, `case` needs indentation. Never, ever, mess around with layout. If you see "parse error" that's likely something about layout.
 
 
 
