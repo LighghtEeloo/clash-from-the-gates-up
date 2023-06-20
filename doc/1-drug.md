@@ -34,9 +34,9 @@ x = x
 
 What is `x`? Recall the idea of term rewriting and say what will happen if we evaluate `x`.
 
-## Theorist. Type Declaration.
+## Theorist. Type Annotation.
 
-You can add type declarations for fun and safety. Mostly fun, of course.
+You can add type annotations for fun and safety. Mostly fun, of course.
 
 ```haskell
 fib :: Int -> Int
@@ -49,7 +49,7 @@ Just kidding. You should add it for every top-level term declaration, and the co
 
 
 
-`::` is more widely used than top-level type declarations. In fact, you can use it for any type ascription.
+`::` is more widely used than top-level type annotations. In fact, you can use it for any type ascription.
 
 ```haskell
 mysterious = 42 :: Float
@@ -317,10 +317,67 @@ Notice the line in the middle. `const 42` means that we can pass only part of th
 
 ## Engineer. I want to pass in a few arguments together.
 
+Tuple is the tool you're looking for.
 
+```haskell
+fibState :: (Int, Int) -> Int -> Int
+fibState (a, b) n =
+	case n of
+		0 -> a
+		1 -> b
+		_ -> fib n' (b, a + b)
+	where
+		n' = n - 1
+		
+fib :: Int -> Int
+fib = fibState (0, 1)
+```
 
-## Conclusion
+This is a tail-recursive version of `fib`, which is much faster than the original one. Explain how it works.
 
-"Haskell is an elegant language; therefore, it's a delightful choice for any coding." They say, from time to time. Well, they're lying, and they must have been top liars. Because the first half is correct - well, until you're actually working on a project in Haskell.
+The behavior of forcing the grouping of input arguments is called `uncurry`. Now you're ready to see what are `curry` and `uncurry`:
 
-If you're here and you're still alive, welcome! This is really a big piece of cake on the topic of Haskell and functional programming.
+```console
+:info curry
+:info uncurry
+```
+
+Try to understand the output.
+
+## Theorist. Pattern.
+
+In the `fibState` function above, there's something you've never seen: `_`. It's called the wildcard, a pattern that can be used on the LHS of the pattern matching, and it means to enter the branch at any time and bind nothing. In `fibState`, `n'` directly uses `n` because the value from the pattern is not bound.
+
+*Patterns* are located in *pattern positions*. For instance, the LHS of a term declaration that is not the function name itself is in the pattern position, and in all `case` branches, everywhere before  `->`.
+
+There are, of course, many other patterns.
+
+1. Any variable name is a pattern if it's in a pattern position.
+2. Any tuple with patterns in it is a pattern. `fibState` also uses this technique.
+3. Any number is a pattern, but remember that the types should match!
+4. The as-pattern. `x@(y, z)` means you can call `(y, z)` `x` in the region below.
+
+We can easily refactor `fibState` to make it look better:
+
+```haskell
+fibState :: (Int, Int) -> Int -> Int
+fibState (a, _) 0 = a
+fibState (_, b) 1 = b
+fibState (a, b) n = fib n' (b, a + b)
+	where
+		n' = n - 1
+```
+
+I keep `where` because I think `where` looks nice. You can inline `n'` or do whatever you like.
+
+## Architect. Type Declaration.
+
+Now that we've seen tuples, you can easily imagine a very large tuple with a collection of all information you need. But that's unreadable. We need type declarations.
+
+..Or not in such haste. Let's take a break and breath in some fresh air.
+
+## Architect. Conclusion.
+
+"Haskell is an elegant language; therefore, it's a delightful choice for any coding." They say, from time to time. Well, they're lying, and they must have been top liars. Because only the first half is correct - well, until you're actually working on a project in Haskell. By then, you'll even doubt the first half. But if you finally manage to do it, you'll soon consider your code the best in the universe because it's so easy to rewrite things in a much better syntax! Perhaps the syntax is the bad bad liar here.
+
+If you're here and you're still alive, congrats and welcome! This is really a big piece of cake on the topic of Haskell and functional programming. We hope you enjoyed it (and try not to spill here, lol).

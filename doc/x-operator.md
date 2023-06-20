@@ -33,3 +33,9 @@ The `$` operator saves you from the hell of parentheses by changing the preceden
 longerThanLongerWire x = wire . wire . wire x
 ```
 
+And recall the eta law (or look at compiler lint):
+
+```haskell
+longerThanLongerWire = wire . wire . wire
+```
+
