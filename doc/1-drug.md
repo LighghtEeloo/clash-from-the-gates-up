@@ -2,7 +2,7 @@
 
 "Haskell is an elegant language; therefore, it's a good choice for any coding." They say, from time to time.
 
-## Theorist. Declarative Programming.
+## Theorist. Functional and Declarative Programming.
 
 Observe: the infamous [Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_sequence) in Haskell.
 
@@ -16,17 +16,15 @@ We're defining the `fib` function, which takes an integer and returns an integer
 
 This is actually a slow version, but it's definitely trivial to write.
 
-（你就说短不短吧）
-
 ## Theorist. Term Rewriting.
 
 Now that you've understood how `fib` works, let's discuss term rewriting. Programming is just like continuously rewriting something from one form to another. In Haskell, we declare rules to describe the rewrite process. 
 
 The `=` sign is divine: it divides the declaration into the left-hand side (LHS) and the right-hand side (RHS), proclaiming a rule of rewrite. For example, if you meet `fib 0`, rewrite it to `1`; if `fib 1`, `1`; otherwise, suppose you meet `n` after `fib`, rewrite it to `fib (n - 1) + fib (n - 2) `, and then do it again for the new sub-`fib`s.
 
-
-
 Note that Haskell functions are naturally recursive. It means that you can use `fib` when defining it.
+
+
 
 Now, a small question for you. What if I write this:
 
@@ -57,7 +55,7 @@ Just kidding. You should add it for every top-level term declaration, and the co
 mysterious = 42 :: Float
 ```
 
-Here `42 :: Float` is a number `42` explicitly annotated as a `Float`. And we define `mysterious` to be `42 :: Float`, which is a `Float`.
+Here `42 :: Float` is a number `42` explicitly annotated as a `Float`. And by using `=`, we define `mysterious` as `42 :: Float`, which is a `Float`.
 
 
 
@@ -181,7 +179,7 @@ What if I don't care once it's working? Well, just run the formatter.
 
 ## Architect. Formatting.
 
-In vscode, use the built-in `Format Document` utility.
+In VSCode, use the built-in `Format Document` utility.
 
 Run `ormolu -i $(find . -name "*.hs")` to format all Haskell files in the repo.
 
@@ -263,6 +261,63 @@ fib =
 ```
 
 Easy, isn't it?
+
+## Theorist. Operators.
+
+Operators are **fun**. Operators are hard to read - unless we understand the meaning behind the symbols.
+
+Let's focus on binary operators first. For example, the `+` operator.
+
+```haskell
+1 + 1
+```
+
+It is, in fact, a **fun**ction that takes two inputs and returns an output.
+
+Place parentheses around the operator to use it as a function name.
+
+```haskell
+(+) 1 1
+```
+
+And it's indeed a function name. So functional that you can define one yourself.
+
+```haskell
+(+.) :: Float -> Float -> Float
+(+.) x y = x + y
+```
+
+And use it.
+
+```haskell
+19 +. 23 -- 42.0
+```
+
+It's very important to remember that operators are just functions with nicer syntax. Don't limit your imagination. Or you'd better limit it a little bit because that is, in my opinion, one of the most important reasons why Haskell is hard to read.
+
+Spoilers: I'd like to blame type classes (or you can call it "ad-hoc function overloading" in C++) for ~70% of unreadable Haskell code.
+
+## Theorist. `(->)` as a Type Operator. Currying.
+
+Operators are everywhere. Did you spot that `->` is also an operator? The only difference is that it runs on types instead of terms.
+
+Wait. "Since you said that operators are functions", you may ask, "Is `->` a function? That works on types?" And the answer is yes! `(->)` is a type-level function that takes two types and returns a type. That's why `a -> a` is a type (the type of `id`), given that `a` is a type.
+
+It's extremely important to notice that `->` is *right-associative* as an operator. That means `a -> b -> a` is, in fact, `a -> (b -> a)`. That's why we have the following:
+
+```haskell
+const :: a -> b -> a
+const 42 :: b -> Int
+const 42 "2333" :: Int
+```
+
+Notice the line in the middle. `const 42` means that we can pass only part of the arguments into the function, and everything works fine because the result is another function that takes fewer arguments. This is called *currying* in functional programming.
+
+"But.. What if I want to force the user of my function to pass a few arguments together?"
+
+## Engineer. I want to pass in a few arguments together.
+
+
 
 ## Conclusion
 

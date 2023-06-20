@@ -1,28 +1,30 @@
 # Prelude: Waking Up, Loaded
 
-Prelude means an action or event serving as an introduction to something more important. Well, it basically means `#include <bits/stdc++.h>` for C++. We'll see how the word is used in clash later on.
+Prelude means an action or event serving as an introduction to something more important. Well, it basically means `#include <bits/stdc++.h>` for C++. We'll see how the word is used in Clash later on.
 
 ## Architect. We really should start a new project.
 
-Suppose the name of the repo is `my-clash-project`. Suppose you've got vscode and docker set up.
+Suppose the name of the repo is `my-clash-project`. Suppose you've got VSCode and Docker set up.
 
 1. First, make sure you have `stack`.
 2. Next, run `stack new my-clash-project clash-lang/simple`.
 3. Then, copy  `.devcontainer/` directory from here to your fresh project root.
-4. Finally, open `vscode` for out of box Haskell experience.
-5. You don't need to but, if you're just too curious, read the `README.md` in your project root.
+4. Finally, open VSCode for out-of-box Haskell experience.
+5. You don't need to, but if you're too curious, read the `README.md` in your project root.
+
+Though you're unlikely to do this by yourself since you've got teammates on your team, it's good to know how to.
 
 ## Engineer. I want to add a new file.
 
 It's actually called a `module`.
 
-1. Go to `*.cabal` file under project root.
+1. Go to `*.cabal` file under the project root.
 2. Search for `exposed-modules` under `library`.
 3. Add the file, with or without `.hs`. Both have the same effect.
 
 ## Theorist. Documentations.
 
-The portals to random clash documentations are placed here. If you want to figure things out by yourself like me, this is the ~~right~~ wrong place to come (too random at the moment).
+The portals to random Clash documentation are placed here. If you want to figure things out by yourself, like me, this is the ~~right~~ wrong place to come (too random at the moment).
 
 [clash-lang/clash-compiler: Haskell to VHDL/Verilog/SystemVerilog compiler (github.com)](https://github.com/clash-lang/clash-compiler)
 

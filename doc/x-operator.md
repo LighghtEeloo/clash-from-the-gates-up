@@ -1,29 +1,35 @@
 # Fashionable & Unreadable: Overdosing Operators
 
-Operators are **fun**. Operators are hard to read - unless we understand the meaning behind the symbol.
+> Operators are **fun**. Operators are hard to read - unless we understand the meaning behind the symbol.
+>
+> \-\- Theorist. Operators. *Gateway Drug #1: Coding by Rewriting*
 
-## Theorist. Operators are functions.
+Let's still focus on binary operators because they are really fun.
 
-Let's focus on binary operators first. For example, the `+` operator.
+## Theorist. `$`.
 
-To use it, just place it between the operands.
-
-```haskell
-1 + 1
-```
-
-But actually, it's a function that takes two inputs and returns an output. Place parentheses around the operator to use it as a function name.
+Recall the trivial `longerThanLongerWire` you wrote a long time ago.
 
 ```haskell
-(+) 1 1
+longerThanLongerWire :: (KnownDomain dom, NFDataX a) => Signal dom a -> Signal dom a
+longerThanLongerWire x = wire (wire (wire x))
 ```
 
-And it's indeed a function name. So functional that you can define it.
+The following are all valid.
 
 ```haskell
-(+.) :: Float -> Float -> Float
-(+.) x y = x + y
+longerThanLongerWire x = wire $ wire (wire x)
+longerThanLongerWire x = wire (wire $ wire x)
+longerThanLongerWire x = wire $ wire $ wire x
 ```
 
-## Theorist. Function Composition.
+The `$` operator saves you from the hell of parentheses by changing the precedence. Observe how it cuts off the need for adding bothering parentheses.
+
+## Theorist. `.`.
+
+`.` stands for function composition. 
+
+```haskell
+longerThanLongerWire x = wire . wire . wire x
+```
 

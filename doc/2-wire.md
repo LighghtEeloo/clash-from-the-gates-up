@@ -13,7 +13,7 @@ alwaysHigh = pure 1
 -- or `pure high` in clash style
 ```
 
-The first thing you'd like to do in a clash project is to `import Clash.Prelude`. Then you can use all common clash symbols, like `KnownDomain`, `Signal`, `Bit`, and `high`.
+The first thing you'd like to do in a Clash project is to `import Clash.Prelude`. Then you can use all common Clash symbols, like `KnownDomain`, `Signal`, `Bit`, and `high`.
 
 Exercise: implement `alwaysLow`.
 
