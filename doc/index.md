@@ -33,13 +33,10 @@ Inside-Out: Functor, Applicative, Bundle, Unbundle, and Alternative
 
 Gateway Drug #2: Moore and Mealy, in a few lines (Composability)
 
-Have a Bit: Signed, Unsigned, Index, Bit and BitVector
+Have a Bit: Signed, Unsigned, Index, Bit, BitVector and BitPattern
 
 Algebraic Data Type: Types and Data Constructors and Patterns
 	- how to compress valid bits into a better form
-
-Forking Paths: Branching, Pattern Matching and Guards, a.k.a. Control Flow
-	- if then else case and the freedom of declarative programming
 
 Fashionable and Unreadable: Overdosing Operators
 
