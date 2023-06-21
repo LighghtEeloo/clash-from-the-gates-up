@@ -33,11 +33,11 @@ I sincerely hope that you can enjoy this trip with the accompany of the three of
 ```
 - how to compress valid bits into a better form
 
+Gateway Drug #2: Moore and Mealy, in a few lines (Composability)
+
 The Constitution Law for The Haskell Realm: Type Classes and Constraints
 
 Inside-Out: Functor, Applicative, Bundle, Unbundle, and Alternative
-
-Gateway Drug #2: Moore and Mealy, in a few lines (Composability)
 
 Fashionable and Unreadable: Overdosing Operators
 

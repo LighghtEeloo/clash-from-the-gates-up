@@ -120,6 +120,33 @@ counter rst d = state
 
 Check [`unsafeToHighPolarity`(link)](https://hackage.haskell.org/package/clash-prelude-1.6.4/docs/Clash-Signal.html#v:unsafeToHighPolarity) to see how to to work with reset.
 
+## Engineer. Turn `fib` into circuit.
+
+Write a function `fib` which is a circuit. It should have a `Signal dom (Unsigned 8)` as input and `Signal dom (Unsigned 64)` as output. 
+
+Recall the last version of `fibState`, a tail-recursive function, and then..
+
+```haskell
+fibState :: (Int, Int) -> Int -> Int
+fibState (a, _) 0 = a
+fibState (_, b) 1 = b
+fibState (a, b) n = fib (n - 1) (b, a + b)
+```
+
+..rewrite it into a state transfer function.
+
+```haskell
+fibStateTrans ::
+	(Int, Int) -> -- last (a, b)
+	Int -> -- last n
+	(Int, Int, Int) -- next (a, b, n)
+fibStateTrans (a, b) 0 = (a, b, 0)
+fibStateTrans (a, b) 1 = (a, b, 1)
+fibStateTrans (a, b) n = (b, a + b, n - 1)
+```
+
+Then.. think a little about how to do it.
+
 ---
 
 Feel free to advance to [next session](3-bit.md).
