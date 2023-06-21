@@ -157,18 +157,18 @@ And it's possible to add many line breaks and indentations.
 
 ```haskell
 fib 0 =
-	0
+  0
 
 fib 1 =
-	let
-		x = 1
-	in
-		x
+  let
+    x = 1
+  in
+    x
 
 fib n = x + y
-	where
-		x = fib (n - 1)
-		y = fib (n - 2)
+  where
+    x = fib (n - 1)
+    y = fib (n - 2)
 ```
 
 Many line breaks are identical to one. But indentations are necessary.
@@ -192,9 +192,9 @@ If you are shocked by the example above, here's an equivalent version of `fib`, 
 ```haskell
 fib' :: Int -> Int
 fib' n =
-	if n == 0 then 0
-	else if n == 1 then 1
-	else fib' (n - 1) + fib' (n - 2)
+  if n == 0 then 0
+  else if n == 1 then 1
+  else fib' (n - 1) + fib' (n - 2)
 ```
 
 Here `fib'` is just a normal variable name. You can change it to `goodFib` or `fib_` as you like. Or `f'i'b`. But not `'fib`. Also, you need to indent when writing a definition of a function.
@@ -206,10 +206,10 @@ And another. But quite different in fashion, closer to the original `fib`.
 ```haskell
 fib'' :: Int -> Int
 fib'' n =
-	case n of
-		0 -> 0
-		1 -> 1
-		n -> fib'' (n - 1) + fib'' (n - 2)
+  case n of
+    0 -> 0
+    1 -> 1
+    n -> fib'' (n - 1) + fib'' (n - 2)
 ```
 
 It's called pattern matching, similar to `switch` in C but way more powerful and expressive. But remember, `case` needs indentation. Never, ever mess around with the layout. If you see "parse error", that's likely something about layout.
@@ -243,21 +243,21 @@ We can have our alternative `fib` (since you've understood what names are allowe
 
 ```haskell
 fib =
-	\n ->
-		case n of
-			0 -> 0
-			1 -> 1
-			n' -> fib (n' - 1) + fib (n' - 2)
+  \n ->
+    case n of
+      0 -> 0
+      1 -> 1
+      n' -> fib (n' - 1) + fib (n' - 2)
 ```
 
 And if your function immediately does a pattern matching, like the `fib` above, you can do this:
 
 ```haskell
 fib =
-	\case
-		0 -> 0
-		1 -> 1
-		n -> fib (n - 1) + fib (n - 2)
+  \case
+    0 -> 0
+    1 -> 1
+    n -> fib (n - 1) + fib (n - 2)
 ```
 
 Easy, isn't it?
@@ -322,12 +322,12 @@ Tuple is the tool you're looking for.
 ```haskell
 fibState :: (Int, Int) -> Int -> Int
 fibState (a, b) n =
-	case n of
-		0 -> a
-		1 -> b
-		_ -> fib n' (b, a + b)
-	where
-		n' = n - 1
+  case n of
+    0 -> a
+    1 -> b
+    _ -> fib n' (b, a + b)
+  where
+    n' = n - 1
 
 fib :: Int -> Int
 fib = fibState (0, 1)
@@ -364,8 +364,8 @@ fibState :: (Int, Int) -> Int -> Int
 fibState (a, _) 0 = a
 fibState (_, b) 1 = b
 fibState (a, b) n = fib n' (b, a + b)
-	where
-		n' = n - 1
+  where
+    n' = n - 1
 ```
 
 I keep `where` because I think `where` looks nice. You can inline `n'` or do whatever you like.

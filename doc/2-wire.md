@@ -34,9 +34,19 @@ First of all, staring at the syntax, we can categorize it as a type variable. Su
 
 The type system can save us here. If we consider `(KnownDomain dom) => Signal dom Bit`, the better type annotation, we'll see that `dom` must satisfy a type constraint called `KnownDomain`.
 
+
+
+A `Domain` is an area of components that share the same clock, reset and enable signals. We only need to deal with one domain during this project, but imagine speeding up memory by setting a faster clock frequency, which will create a different domain from the processor.
+
+`System` is a Haskell type and is the only domain we'll use. It's the "main" domain. Since `dom` here is a type parameter, we can place any domain in, for example, `System`.
+
 We'll talk more about type constraints later; for now, you only need to know conceptually what domain is.
 
-## Theorist. Naming Convention.
+
+
+Why would domains be useful? Good question. Domains can hide unimportant details. Remember that you have to pass in the clock, reset, and enable signals everywhere in the System Verilog? You can say that a `dom` satisfies `HiddenClockResetEnable dom` and no longer prepend `Clock dom -> Reset dom -> Enable dom -> ...` before you do anything!
+
+## Architect. Naming Convention.
 
 Haskell variables use `smallCamelCase`. Haskell types use `BigCamelCase`, and so do Haskell constraints. Haskell names can include `'` as long as it's not the first character. Haskell operators can be function names by adding parentheses around them, like `(+) 1 1`.
 
@@ -61,3 +71,13 @@ longerThanLongerWire x = wire (wire (wire x))
 ```
 
 See the chapter on operators to check out and function composition.
+
+## Engineer. How to build a counter.
+
+The key is to use a register. Let's find out what its interface looks like.
+
+```console
+:type register
+:info register
+```
+
