@@ -32,11 +32,13 @@ What is `dom` in the examples above?
 
 First of all, staring at the syntax, we can categorize it as a type variable. Sure. But what does it stand for?
 
-The type system can save us here. If we consider `(KnownDomain dom) => Signal dom Bit`, the better type ascription, we'll see that `dom` must satisfy a type constraint called `KnownDomain`.
+The type system can save us here. If we consider `(KnownDomain dom) => Signal dom Bit`, the better type annotation, we'll see that `dom` must satisfy a type constraint called `KnownDomain`.
 
-## Theorist. Name Convention.
+We'll talk more about type constraints later; for now, you only need to know conceptually what domain is.
 
-Haskell variables use `smallCamelCase`. Haskell types use `BigCamelCase`, and so do constraints. Haskell names can include `'` as long as it's not the first character. Haskell operators can be function names by adding parentheses around them, like `(+) 1 1`.
+## Theorist. Naming Convention.
+
+Haskell variables use `smallCamelCase`. Haskell types use `BigCamelCase`, and so do Haskell constraints. Haskell names can include `'` as long as it's not the first character. Haskell operators can be function names by adding parentheses around them, like `(+) 1 1`.
 
 ## Engineer. I want to wire things up.
 
@@ -47,7 +49,7 @@ wire :: (KnownDomain dom, NFDataX a) => Signal dom a -> Signal dom a
 wire x = x
 ```
 
-A wire has an input and an output. `x` on the LHS is the input, `x` on the RHS is the output. Ignore the type declaration for now. See the chapter on Functor.
+A wire has an input and an output. `x` on the LHS is the input, and `x` on the RHS is the output. Ignore the type declaration for now. See the chapter on Functor.
 
 Now that I have two wires. I can wire them up and make them one wire again.
 

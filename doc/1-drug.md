@@ -18,7 +18,7 @@ This is actually a slow version, but it's definitely trivial to write.
 
 ## Theorist. Term Rewriting.
 
-Now that you've understood how `fib` works, let's discuss term rewriting. Programming is just like continuously rewriting something from one form to another. In Haskell, we declare rules to describe the rewrite process. 
+Now that you've understood how `fib` works, let's discuss term rewriting. Programming is just like continuously rewriting something from one form to another. In Haskell, we declare rules to describe the rewrite process.
 
 The `=` sign is divine: it divides the declaration into the left-hand side (LHS) and the right-hand side (RHS), proclaiming a rule of rewrite. For example, if you meet `fib 0`, rewrite it to `1`; if `fib 1`, `1`; otherwise, suppose you meet `n` after `fib`, rewrite it to `fib (n - 1) + fib (n - 2) `, and then do it again for the new sub-`fib`s.
 
@@ -113,7 +113,7 @@ It indicates that `x` has type `t`. Wait, say that again?
 To understand the result, we need to know the rules of the Haskell type system better.
 
 1. All type literals begin with uppercase. `Int` and `Float` are good examples.
-2. If you see a type that starts with lowercase, pay attention to where it's introduced. Because unlucky, it could either come from a binder before or get implicitly defined right on site! 
+2. If you see a type that starts with lowercase, pay attention to where it's introduced. Because unlucky, it could either come from a binder before or get implicitly defined right on site!
    - If bound earlier, it will be replaced with a type literal later.
    - If defined on-site, it means "forall type that is later plugged in here, the following holds". It's like the generic type in C++.
 
@@ -328,7 +328,7 @@ fibState (a, b) n =
 		_ -> fib n' (b, a + b)
 	where
 		n' = n - 1
-		
+
 fib :: Int -> Int
 fib = fibState (0, 1)
 ```
@@ -346,13 +346,13 @@ Try to understand the output.
 
 ## Theorist. Pattern.
 
-In the `fibState` function above, there's something you've never seen: `_`. It's called the wildcard, a pattern that can be used on the LHS of the pattern matching, and it means to enter the branch at any time and bind nothing. In `fibState`, `n'` directly uses `n` because the value from the pattern is not bound.
+In the `fibState` function above, there's something you've never seen: `_`. It's called the wildcard, a pattern that can be used on the LHS of the pattern matching, and it means to enter the branch regardless of what term is being matched and bind nothing. In `fibState`, `n'` directly uses `n` because the value from the pattern is not bound.
 
 *Patterns* are located in *pattern positions*. For instance, the LHS of a term declaration that is not the function name itself is in the pattern position, and in all `case` branches, everywhere before  `->`.
 
 There are, of course, many other patterns.
 
-1. Any variable name is a pattern if it's in a pattern position.
+1. Any variable name is a pattern if it's in a pattern position; like `_`, it matches everything.
 2. Any tuple with patterns in it is a pattern. `fibState` also uses this technique.
 3. Any number is a pattern, but remember that the types should match!
 4. The as-pattern. `x@(y, z)` means you can call `(y, z)` `x` in the region below.

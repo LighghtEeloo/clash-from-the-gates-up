@@ -29,14 +29,16 @@ I sincerely hope that you can enjoy this trip with the accompany of the three of
 2. [Machine 101: Signal, Clock, Register, and Mux](2-wire.md)
 
 ```
-Inside-Out: Functor, Applicative, Bundle, Unbundle, and Alternative
-
-Gateway Drug #2: Moore and Mealy, in a few lines (Composability)
-
 Have a Bit: Signed, Unsigned, Index, Bit, BitVector and BitPattern
 
 Algebraic Data Type: Types and Data Constructors and Patterns
 	- how to compress valid bits into a better form
+
+The Constitution Law for The Haskell Realm: Type Classes and Constraints
+	
+Inside-Out: Functor, Applicative, Bundle, Unbundle, and Alternative
+
+Gateway Drug #2: Moore and Mealy, in a few lines (Composability)
 
 Fashionable and Unreadable: Overdosing Operators
 
@@ -44,8 +46,6 @@ Vector: foldl foldr fold map and indexed version with indices and slice and spli
 
 Compile Time Constants: KnownNat and SNat
 	- Index
-
-The Constitution Law for The Haskell Realm: Constraints
 
 Imperative Revisited: Monads and Monad Transformers
 

@@ -30,10 +30,16 @@ The `$` operator saves you from the hell of parentheses by changing the preceden
 `.` stands for function composition. 
 
 ```haskell
-longerThanLongerWire x = wire . wire . wire x
+longerThanLongerWire x = (wire . wire . wire) x
 ```
 
-And recall the eta law (or look at compiler lint):
+Or recall `$`:
+
+```haskell
+longerThanLongerWire x = wire . wire . wire $ x
+```
+
+And recall the eta law (or look at compiler's lintings):
 
 ```haskell
 longerThanLongerWire = wire . wire . wire
