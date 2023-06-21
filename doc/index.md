@@ -26,16 +26,15 @@ I sincerely hope that you can enjoy this trip with the accompany of the three of
 
 0. [Prelude: Waking Up, Loaded](0-prelude.md)
 1. [Gateway Drug #1: Coding by Rewriting](1-drug.md)
-2. [Machine 101: Signal, Clock, Register, and Mux](2-wire.md)
+2. [Circuit 101: Signal, Clock, Register, and Mux](2-wire.md)
 3. [Have a Bit: Signed, Unsigned, Index, Bit, BitVector and BitPattern](3-bit.md)
-4. 
+4. [Algebraic Data Type: Type Constructors, Data Constructors and Patterns](4-data.md)
 
 ```
-Algebraic Data Type: Types and Data Constructors and Patterns
-	- how to compress valid bits into a better form
+- how to compress valid bits into a better form
 
 The Constitution Law for The Haskell Realm: Type Classes and Constraints
-	
+
 Inside-Out: Functor, Applicative, Bundle, Unbundle, and Alternative
 
 Gateway Drug #2: Moore and Mealy, in a few lines (Composability)
@@ -45,7 +44,7 @@ Fashionable and Unreadable: Overdosing Operators
 Vector: foldl foldr fold map and indexed version with indices and slice and split and shift
 
 Compile Time Constants: KnownNat and SNat
-	- Index
+- Index
 
 Imperative Revisited: Monads and Monad Transformers
 

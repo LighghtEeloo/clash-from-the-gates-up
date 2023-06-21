@@ -1,4 +1,6 @@
-# Machine 101: Signal, Clock, Register, and Mux
+# Circuit 101: Signal, Clock, Register, and Mux
+
+Now that we've seen how Haskell works in general (except the type system part), we can see how we can apply the knowledge and build up our circuit. But first, we need to learn some basic components.
 
 ## Engineer. I want a constant signal.
 
@@ -98,6 +100,8 @@ Or if you are a one-liner:
 ```haskell
 counter = state where state = register 0 (state + 1)
 ```
+
+`Unsigned 4` is a type for a sized number. See the next chapter for details.
 
 ## Engineer. How to reset the counter with `mux`.
 
