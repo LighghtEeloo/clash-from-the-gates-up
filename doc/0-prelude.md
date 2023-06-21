@@ -26,6 +26,10 @@ It's actually called a `module`.
 
 The portals to random Clash documentation are placed here. If you want to figure things out by yourself, like me, this is the ~~right~~ wrong place to come (too random at the moment).
 
+Feel free to advance to [next session](1-drug.md).
+
+---
+
 [clash-lang/clash-compiler: Haskell to VHDL/Verilog/SystemVerilog compiler (github.com)](https://github.com/clash-lang/clash-compiler)
 
 [Clash: Documentation (clash-lang.org)](https://clash-lang.org/documentation/)

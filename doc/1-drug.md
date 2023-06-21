@@ -24,7 +24,7 @@ The `=` sign is divine: it divides the declaration into the left-hand side (LHS)
 
 Note that Haskell functions are naturally recursive. It means that you can use `fib` when defining it.
 
-
+---
 
 Now, a small question for you. What if I write this:
 
@@ -47,7 +47,7 @@ fib n = fib (n - 1) + fib (n - 2)
 
 Just kidding. You should add it for every top-level term declaration, and the compiler will yell at you if you don't. But no, I wasn't kidding; I was saying that most terms are **fun**ctions.
 
-
+---
 
 `::` is more widely used than top-level type annotations. In fact, you can use it for any type ascription.
 
@@ -57,7 +57,7 @@ mysterious = 42 :: Float
 
 Here `42 :: Float` is a number `42` explicitly annotated as a `Float`. And by using `=`, we define `mysterious` as `42 :: Float`, which is a `Float`.
 
-
+---
 
 "`::` is hard to type!"
 
@@ -65,7 +65,7 @@ Yeah, the language designers think the same, but they designed `::` to mean type
 
 Look at how things are changing in decades.
 
-
+---
 
 Here's another question for you.
 
@@ -85,10 +85,10 @@ cabal run clashi
 
 This line of command will summon a clash interactive shell. It's now possible to declare, evaluate, and inspect the type of any term.
 
-```haskell
-x = x
-:type x
-x
+```console
+ghci> x = x
+ghci> :type x
+ghci> x
 ```
 
 `:type` is an interactive command that won't work in the source code. You can use the short version `:t`. It shows a type of term.
@@ -132,13 +132,13 @@ i = x -- also works out fine
 And the simplest terms you can find in Haskell:
 
 ```console
-:type id
-id 42
-:type const
-const 42 10000
-:type undefined
-undefined
-const 42 undefined
+ghci> :type id
+ghci> id 42
+ghci> :type const
+ghci> const 42 10000
+ghci> :type undefined
+ghci> undefined
+ghci> const 42 undefined
 ```
 
 Try these in the interactive shell and observe.
@@ -199,7 +199,7 @@ fib' n =
 
 Here `fib'` is just a normal variable name. You can change it to `goodFib` or `fib_` as you like. Or `f'i'b`. But not `'fib`. Also, you need to indent when writing a definition of a function.
 
-
+---
 
 And another. But quite different in fashion, closer to the original `fib`.
 
@@ -214,7 +214,7 @@ fib'' n =
 
 It's called pattern matching, similar to `switch` in C but way more powerful and expressive. But remember, `case` needs indentation. Never, ever mess around with the layout. If you see "parse error", that's likely something about layout.
 
-
+---
 
 And another. But cursed.
 
@@ -338,8 +338,8 @@ This is a tail-recursive version of `fib`, which is much faster than the origina
 The behavior of forcing the grouping of input arguments is called `uncurry`. Now you're ready to see what are `curry` and `uncurry`:
 
 ```console
-:info curry
-:info uncurry
+ghci> :info curry
+ghci> :info uncurry
 ```
 
 Try to understand the output.
@@ -381,3 +381,5 @@ Now that we've seen tuples, you can easily imagine a very large tuple with a col
 "Haskell is an elegant language; therefore, it's a delightful choice for any coding." They say, from time to time. Well, they're lying, and they must have been top liars. Because only the first half is correct - well, until you're actually working on a project in Haskell. By then, you'll even doubt the first half. But if you finally manage to do it, you'll soon consider your code the best in the universe because it's so easy to rewrite things in a much better syntax! Perhaps the syntax is the bad bad liar here.
 
 If you're here and you're still alive, congrats and welcome! This is really a big piece of cake on the topic of Haskell and functional programming. We hope you enjoyed it (and try not to spill here, lol).
+
+Feel free to advance to [next session](2-wire.md).

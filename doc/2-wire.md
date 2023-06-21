@@ -34,7 +34,7 @@ First of all, staring at the syntax, we can categorize it as a type variable. Su
 
 The type system can save us here. If we consider `(KnownDomain dom) => Signal dom Bit`, the better type annotation, we'll see that `dom` must satisfy a type constraint called `KnownDomain`.
 
-
+---
 
 A `Domain` is an area of components that share the same clock, reset and enable signals. We only need to deal with one domain during this project, but imagine speeding up memory by setting a faster clock frequency, which will create a different domain from the processor.
 
@@ -42,7 +42,7 @@ A `Domain` is an area of components that share the same clock, reset and enable 
 
 We'll talk more about type constraints later; for now, you only need to know conceptually what domain is.
 
-
+---
 
 Why would domains be useful? Good question. Domains can hide unimportant details. Remember that you have to pass in the clock, reset, and enable signals everywhere in the System Verilog? You can say that a `dom` satisfies `HiddenClockResetEnable dom` and no longer prepend `Clock dom -> Reset dom -> Enable dom -> ...` before you do anything!
 
@@ -72,12 +72,50 @@ longerThanLongerWire x = wire (wire (wire x))
 
 See the chapter on operators to check out and function composition.
 
-## Engineer. How to build a counter.
+## Engineer. How to build a counter with `register`.
 
-The key is to use a register. Let's find out what its interface looks like.
+The secret sauce is to use a register. Let's find out what its interface looks like.
 
 ```console
-:type register
-:info register
+ghci> :type register
+ghci> :info register
 ```
 
+Observe how the outputs differ for `:type` and `:info`.
+
+A register takes an initial value and an input signal and produces an output signal.
+
+```haskell
+counter :: (HiddenClockResetEnable dom) => Signal dom (Unsigned 4) -- [0, 16) counter
+counter = state
+  where
+    state = register 0 nextState
+    nextState = state + 1
+```
+
+Or if you are a one-liner:
+
+```haskell
+counter = state where state = register 0 (state + 1)
+```
+
+## Engineer. How to reset the counter with `mux`.
+
+`mux` is like `if` on `Signal`s. It takes a `Signal dom Bool` and two `Signal dom a` for `True` and `False` branches.
+
+```haskell
+counter ::
+  (HiddenClockResetEnable dom) =>
+  Reset dom -> Signal dom (Unsigned 4) -> Signal dom (Unsigned 4) -- [0, 16) counter
+counter rst d = state
+  where
+    state = register 0 nextState
+    nextState = mux (unsafeToHighPolarity rst) d (state + 1)
+    -- If reset is high, then output `d` (default), otherwise it's a counter
+```
+
+Check [`unsafeToHighPolarity`(link)](https://hackage.haskell.org/package/clash-prelude-1.6.4/docs/Clash-Signal.html#v:unsafeToHighPolarity) to see how to to work with reset.
+
+---
+
+Feel free to advance to [next session](3-bit.md).
