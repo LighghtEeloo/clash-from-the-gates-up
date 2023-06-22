@@ -18,9 +18,9 @@ This is actually a slow version, but it's definitely trivial to write.
 
 ## Theorist. Term Rewriting.
 
-Now that you've understood how `fib` works, let's discuss term rewriting. Programming is just like continuously rewriting something from one form to another. In Haskell, we declare rules to describe the rewrite process.
+Now that you've understood how `fib` works let's discuss term rewriting. Computation is just like continuously rewriting something from one form to another. In Haskell, we declare rules to describe the rewrite process.
 
-The `=` sign is divine: it divides the declaration into the left-hand side (LHS) and the right-hand side (RHS), proclaiming a rule of rewrite. For example, if you meet `fib 0`, rewrite it to `1`; if `fib 1`, `1`; otherwise, suppose you meet `n` after `fib`, rewrite it to `fib (n - 1) + fib (n - 2) `, and then do it again for the new sub-`fib`s.
+The `=` sign is divine: it divides the declaration into the left-hand side (LHS) and the right-hand side (RHS), proclaiming a rule of rewriting. For example, if you meet `fib 0`, rewrite it to `1`; if `fib 1`, `1`; otherwise, suppose you meet `n` after `fib`, rewrite it to `fib (n - 1) + fib (n - 2) `, and then do it again for the new sub-`fib`s.
 
 Note that Haskell functions are naturally recursive. It means that you can use `fib` when defining it.
 
@@ -86,9 +86,9 @@ cabal run clashi
 This line of command will summon a clash interactive shell. It's now possible to declare, evaluate, and inspect the type of any term.
 
 ```console
-ghci> x = x
-ghci> :type x
-ghci> x
+clashi> x = x
+clashi> :type x
+clashi> x
 ```
 
 `:type` is an interactive command that won't work in the source code. You can use the short version `:t`. It shows a type of term.
@@ -104,7 +104,7 @@ If you want to exit, press `Ctrl+D` (`^D`).
 In the last session, you should have seen the output
 
 ```console
-ghci> :type x
+clashi> :type x
 x :: t
 ```
 
@@ -132,13 +132,13 @@ i = x -- also works out fine
 And the simplest terms you can find in Haskell:
 
 ```console
-ghci> :type id
-ghci> id 42
-ghci> :type const
-ghci> const 42 10000
-ghci> :type undefined
-ghci> undefined
-ghci> const 42 undefined
+clashi> :type id
+clashi> id 42
+clashi> :type const
+clashi> const 42 10000
+clashi> :type undefined
+clashi> undefined
+clashi> const 42 undefined
 ```
 
 Try these in the interactive shell and observe.
@@ -295,7 +295,7 @@ And use it.
 
 It's very important to remember that operators are just functions with nicer syntax. Don't limit your imagination. Or you'd better limit it a little bit because that is, in my opinion, one of the most important reasons why Haskell is hard to read.
 
-Spoilers: I'd like to blame type classes (or you can call it "ad-hoc function overloading" in C++) for ~70% of unreadable Haskell code.
+Spoilers: I'd like to blame type classes (or you can call it "function overloading or ad-hoc polymorphism" in C++) for ~70% of unreadable Haskell code.
 
 ## Theorist. `(->)` as a Type Operator. Currying.
 
@@ -338,8 +338,8 @@ This is a tail-recursive version of `fib`, which is much faster than the origina
 The behavior of forcing the grouping of input arguments is called `uncurry`. Now you're ready to see what are `curry` and `uncurry`:
 
 ```console
-ghci> :info curry
-ghci> :info uncurry
+clashi> :info curry
+clashi> :info uncurry
 ```
 
 Try to understand the output.
@@ -355,7 +355,8 @@ There are, of course, many other patterns.
 1. Any variable name is a pattern if it's in a pattern position; like `_`, it matches everything.
 2. Any tuple with patterns in it is a pattern. `fibState` also uses this technique.
 3. Any number is a pattern, but remember that the types should match!
-4. The as-pattern. `x@(y, z)` means you can call `(y, z)` `x` in the region below.
+4. The as-pattern. `x@(y, z)` means you can call `(y, z)` with the name `x` in the region below.
+5. .. (you'll need to see further chapters to unlock this entry)
 
 We can easily refactor `fibState` to make it look better:
 
@@ -374,12 +375,12 @@ I keep `where` because I think `where` looks nice. You can inline `n'` or do wha
 
 Now that we've seen tuples, you can easily imagine a very large tuple with a collection of all information you need. But that's unreadable. We need type declarations.
 
-..Or not in such haste. Let's take a break and breath in some fresh air.
+..Or not in such haste. Let's take a break and breathe in some fresh air.
 
 ## Architect. Conclusion.
 
-"Haskell is an elegant language; therefore, it's a delightful choice for any coding." They say, from time to time. Well, they're lying, and they must have been top liars. Because only the first half is correct - well, until you're actually working on a project in Haskell. By then, you'll even doubt the first half. But if you finally manage to do it, you'll soon consider your code the best in the universe because it's so easy to rewrite things in a much better syntax! Perhaps the syntax is the bad bad liar here.
+"Haskell is an elegant language; therefore, it's a delightful choice for any coding." They say, from time to time. Well, they're lying, and they must have been top liars. Because only the first half is correct - well, until you're actually working on a project in Haskell. By then, you'll even doubt the first half. But if you finally manage to do it, you'll soon consider your code the best in the universe because it's so easy to rewrite things in a much better syntax! Perhaps the syntax is the bad, bad liar here.
 
 If you're here and you're still alive, congrats and welcome! This is really a big piece of cake on the topic of Haskell and functional programming. We hope you enjoyed it (and try not to spill here, lol).
 
-Feel free to advance to [next session](2-wire.md).
+Feel free to advance to the [next session](2-wire.md).

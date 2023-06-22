@@ -48,6 +48,12 @@ We'll talk more about type constraints later; for now, you only need to know con
 
 Why would domains be useful? Good question. Domains can hide unimportant details. Remember that you have to pass in the clock, reset, and enable signals everywhere in the System Verilog? You can say that a `dom` satisfies `HiddenClockResetEnable dom` and no longer prepend `Clock dom -> Reset dom -> Enable dom -> ...` before you do anything!
 
+```console
+:info HiddenClockResetEnable
+```
+
+See more by yourself.
+
 ## Architect. Naming Convention.
 
 Haskell variables use `smallCamelCase`. Haskell types use `BigCamelCase`, and so do Haskell constraints. Haskell names can include `'` as long as it's not the first character. Haskell operators can be function names by adding parentheses around them, like `(+) 1 1`.
@@ -72,7 +78,7 @@ longerThanLongerWire :: (KnownDomain dom, NFDataX a) => Signal dom a -> Signal d
 longerThanLongerWire x = wire (wire (wire x))
 ```
 
-See the chapter on operators to check out and function composition.
+See the chapter on operators to check out `$` and function composition.
 
 ## Engineer. How to build a counter with `register`.
 
@@ -98,7 +104,7 @@ counter = state
 Or if you are a one-liner:
 
 ```haskell
-counter = state where state = register 0 (state + 1)
+counter = register 0 (counter + 1)
 ```
 
 `Unsigned 4` is a type for a sized number. See the next chapter for details.
@@ -120,9 +126,11 @@ counter rst d = state
 
 Check [`unsafeToHighPolarity`(link)](https://hackage.haskell.org/package/clash-prelude-1.6.4/docs/Clash-Signal.html#v:unsafeToHighPolarity) to see how to to work with reset.
 
-## Engineer. Turn `fib` into circuit.
+## Engineer. Turn `fib` into a circuit.
 
-Write a function `fib` which is a circuit. It should have a `Signal dom (Unsigned 8)` as input and `Signal dom (Unsigned 64)` as output. 
+Till now, all components are ready for you to build a circuit. So why not build one?
+
+Write a function `fib` which is a circuit. It should have a `Signal dom (Unsigned 8)` as input and `Signal dom (Unsigned 64)` as output.
 
 Recall the last version of `fibState`, a tail-recursive function, and then..
 
@@ -137,9 +145,9 @@ fibState (a, b) n = fib (n - 1) (b, a + b)
 
 ```haskell
 fibStateTrans ::
-	(Int, Int) -> -- last (a, b)
-	Int -> -- last n
-	(Int, Int, Int) -- next (a, b, n)
+  (Int, Int) -> -- last (a, b)
+  Int -> -- last n
+  (Int, Int, Int) -- next (a, b, n)
 fibStateTrans (a, b) 0 = (a, b, 0)
 fibStateTrans (a, b) 1 = (a, b, 1)
 fibStateTrans (a, b) n = (b, a + b, n - 1)
@@ -149,4 +157,4 @@ Then.. think a little about how to do it.
 
 ---
 
-Feel free to advance to [next session](3-bit.md).
+Feel free to advance to the [next session](3-bit.md).

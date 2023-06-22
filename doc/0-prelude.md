@@ -26,7 +26,7 @@ It's actually called a `module`.
 
 The portals to random Clash documentation are placed here. If you want to figure things out by yourself, like me, this is the ~~right~~ wrong place to come (too random at the moment).
 
-Feel free to advance to [next session](1-drug.md).
+Feel free to advance to the [next session](1-drug.md).
 
 ---
 

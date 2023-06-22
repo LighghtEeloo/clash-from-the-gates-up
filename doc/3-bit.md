@@ -1,6 +1,6 @@
 # Have a Bit: Signed, Unsigned, Index, Bit, BitVector and BitPattern
 
-With Clash data types we'll be able to describe the data that flows inside the wires and components we learnt last time.
+With Clash data types we'll be able to describe the data that flows inside the wires and components we learned last time.
 
 ## Architect. Let's use hackage for documentation.
 
@@ -13,3 +13,7 @@ Learn how to browse the website for documentation. For all entries, see:
 ## Architect. A bunch of Clash data types.
 
 The topics are listed in the title. It's now your job to figure out what they are.
+
+---
+
+Feel free to advance to the [next session](4-data.md).
