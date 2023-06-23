@@ -2,6 +2,8 @@
 
 With Clash data types we'll be able to describe the data that flows inside the wires and components we learned last time.
 
+This session is meant to be unreadable by itself because it relies heavily on the documents of Clash; however, it's kinda meaningless to absorb information without motivation. So feel free to skip and find information latter when needed.
+
 ## Architect. Let's use hackage for documentation.
 
 Read [Clash.Sized.BitVector (haskell.org)](https://hackage.haskell.org/package/clash-prelude-1.6.4/docs/Clash-Sized-BitVector.html).
