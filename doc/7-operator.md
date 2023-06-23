@@ -110,3 +110,7 @@ Kind of exciting, right? Can't wait to see how I can mess up the code base!
 ## Architect. No, you don't.
 
 You should use operators with care and with caution. Check your thoughts on new operators with another teammate before using something too fancy. If your teammate can't follow your logic, try to avoid using it.
+
+---
+
+Feel free to advance to the [next session](8-vector.md).
