@@ -30,11 +30,10 @@ I sincerely hope that you can enjoy this trip with the accompany of the three of
 3. [Have a Bit: Signed, Unsigned, Index, Bit, BitVector and BitPattern](3-bit.md)
 4. [Algebraic Data Type: Type Constructors, Data Constructors, and Patterns](4-data.md)
 5. [Inside-Out: Functor, Applicative, Alternative, Bundle, and Unbundle](5-class.md)
-6. [Fashionable and Unreadable: Overdosing Operators](6-operator.md)
+6. [Gateway Drug #2: Moore and Mealy](6-drug.md)
+7. [Fashionable and Unreadable: Overdosing Operators](7-operator.md)
 
 ```
-Gateway Drug #2: Moore and Mealy, in a few lines (Composability)
-
 Vector: foldl foldr fold map and indexed version with indices and slice and split and shift
 - Compile Time Constants: KnownNat and SNat
 - Index

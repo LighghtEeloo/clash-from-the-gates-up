@@ -233,4 +233,4 @@ There you got it.
 
 ---
 
-Feel free to advance to the [next session](6-operator.md).
+Feel free to advance to the [next session](7-operator.md).
