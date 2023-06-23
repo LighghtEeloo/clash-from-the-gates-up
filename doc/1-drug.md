@@ -234,6 +234,7 @@ What if I want a function in place without explicitly naming it?
 Well, there is a way.
 
 ```haskell
+id x = x
 id' = \x -> x
 ```
 

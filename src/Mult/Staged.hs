@@ -1,7 +1,7 @@
 module Mult.Staged where
 
 import Clash.Prelude hiding (init)
-import Control.Lens hiding (op)
+import Control.Lens
 
 -- import Control.Monad.RWS
 -- import Data.Monoid.Generic

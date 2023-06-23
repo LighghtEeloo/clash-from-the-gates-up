@@ -18,6 +18,10 @@ main = do
     ]
   defaultMain
     [ "--systemverilog",
+      "src/Mult2/Staged.hs"
+    ]
+  defaultMain
+    [ "--systemverilog",
       "src/ISR/Project.hs"
     ]
   defaultMain
