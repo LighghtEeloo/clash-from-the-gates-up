@@ -7,10 +7,10 @@ I was so close to changing the title of this session to `<$>`, `<*>`, and `<|>`.
 Three of the most important tasks of functional programming are to
 
 1. free the programmers from trivial work
-2. reuse code and logic (or in fact, just functions)
+2. reuse code and logic (or, in fact, just functions)
 3. build abstractions to serve as better documentation
 
-And Haskell is a top functional programming language (yeah I hear someone complaining on the other side of the planet; maybe that's from the inner me), so it should be really good like .. at these tasks.
+And Haskell is a top functional programming language (yeah, I hear someone complaining on the other side of the planet; maybe that's from the inner me), so it should be really good like .. at these tasks.
 
 Indeed. Let's talk about the nuclear weapon: type classes.
 
@@ -18,7 +18,7 @@ Indeed. Let's talk about the nuclear weapon: type classes.
 
 Rarely have I used metaphors in the titles. The *real* title should be "Type Classes and Constraints", but I simply can't resist the temptation again.
 
-Type classes implement ad-hoc polymorphism, also called function overloading, where the overloaded behaviors are different for each type.
+Type classes implement ad-hoc polymorphism, also called function overloading, where the overloaded behaviors differ for each type.
 
 Type classes are **not** types; type classes are *constraints* on *types*. Beginners can easily make the mistake of placing constraints in the position of types. It's just wrong. `System` is a type; `KnownDomain dom` is a constraint; therefore, `KnownDomain System` holds. There are no means to replace `System` by `KnownDomain`. We can use `:info` to see what a name is; if it's `data` or `type`, then it's a type; if it's `class`, then it's a type class, or you can also call it a constraint.
 
@@ -142,7 +142,7 @@ clashi> double <$> (Just 1)
 
 `Maybe` is a container in the sense that it could contain something (or not). If you have a function that operates on the thing `a` that lives inside it, you can operate on `Maybe a` by `fmap`ping that function.
 
-Checkout the info of `Functor`; use google when necessary.
+Check out the info of `Functor`; use Google when necessary.
 
 ```console
 clashi> :info Functor
@@ -180,13 +180,52 @@ Nothing too hard, right?
 
 ## Theorist. Applicative.
 
+.. maybe just consult the engineer. We don't have much time today.
+
 ## Engineer. Apply `Applicative` on`Signal`s.
 
 Let's recall the examples above.
 
 .. I guess continuously quoting myself is not a good habit, is it?
 
+Basically, if a function `g` takes multiple arguments and it's curried, you can `liftA` it to make it take `f a` and `f b` instead of `a` and `b` if `Applicative f`. `f` here is the container-ish thing. As for the operators, you can use
+
+```haskell
+doubleAdd <$> (Just 1) <*> (Just 2)
+```
+
+Try the following in `clashi`:
+
+```console
+clashi> doubleAdd a b = 2 * a + b
+clashi> doubleAdd <$> (Just 1) <*> (Just 2)
+clashi> doubleAdd <$> (Just 1) <*> Nothing
+clashi> doubleAdd <$> Nothing <*> (Just 2)
+clashi> doubleAdd <$> Nothing <*> Nothing
+```
+
+Hopefully, this makes sense to you.
+
 ## Theorist. Alternative.
+
+Another handy tool for `Maybe`. It's just shortcircuit-or.
+
+Observe:
+
+```console
+clashi> Just 1 <|> Just 2
+clashi> Just 1 <|> Nothing
+clashi> Nothing <|> Just 2
+clashi> Nothing <|> Nothing
+```
+
+and check
+
+```console
+clashi> :info (<|>)
+```
+
+There you got it.
 
 ## Theorist. Bundle and Unbundle.
 
