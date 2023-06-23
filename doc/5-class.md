@@ -99,3 +99,20 @@ Ok, this is perhaps confusing. Let's invite the theorist.
 
 ## Theorist. Functor.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+Feel free to advance to the [next session](6-operator.md).

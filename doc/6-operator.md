@@ -25,6 +25,41 @@ longerThanLongerWire x = wire $ wire $ wire x
 
 The `$` operator saves you from the hell of parentheses by changing the precedence. Observe how it cuts off the need for adding bothering parentheses.
 
+Now let's check out the type of `$`.
+
+```console
+clashi> :type ($)
+clashi> :info ($)
+```
+
+What do you mean .. it does nothing?
+
+```console
+($) :: (a -> b) -> a -> b       -- Defined in `GHC.Base'
+infixr 0 $
+```
+
+Yes, it almost does nothing, except ..
+
+## Theorist. ` `.
+
+Yeah, there's a space in the title, and it's not a typo.
+
+, or function application, is perhaps the most overlooked operator in functional programming languages. Unlike `(,)`, we can't check it in `clashi` this time because it's too deeply coupled into the Haskell syntax. But if we want to write out its type, it's exactly the same as `$`; the only difference is its precedence and associativity. It has the **highest** precedence, or we can say it **binds the tightest** among all operators. 
+
+Observe:
+
+```haskell
+id x + y
+-- (id x) + y
+x + id y
+-- x + (id y)
+id $ x + y
+-- id (x + y)
+```
+
+That's it. That's how the most important operator in all FP languages works.
+
 ## Theorist. `.`.
 
 `.` stands for function composition. 
