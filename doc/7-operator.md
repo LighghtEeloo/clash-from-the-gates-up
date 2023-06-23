@@ -45,7 +45,7 @@ Yes, it almost does nothing, except ..
 
 Yeah, there's a space in the title, and it's not a typo.
 
-, or function application, is perhaps the most overlooked operator in functional programming languages. Unlike `(,)`, we can't check it in `clashi` this time because it's too deeply coupled into the Haskell syntax. But if we want to write out its type, it's exactly the same as `$`; the only difference is its precedence and associativity. It has the **highest** precedence, or we can say it **binds the tightest** among all operators.
+` `, or function application, is perhaps the most overlooked operator in functional programming languages. Unlike `(,)`, we can't check it in `clashi` this time because it's too deeply coupled into the Haskell syntax. But if we want to write out its type, it's exactly the same as `$`; the only difference is its precedence and associativity. It has the **highest** precedence, or we can say it **binds the tightest** among all operators.
 
 Observe:
 

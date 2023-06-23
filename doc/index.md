@@ -40,6 +40,6 @@ I sincerely hope that you can enjoy this trip with the accompany of the three of
 
 Imperative Revisited: Monads and Monad Transformers
 
-Unforgivably Convenient: Records and Baby Lens
+The Unforgivably Convenient: Records and Baby Lens
 ```
 
