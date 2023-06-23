@@ -1,4 +1,4 @@
-# Inside-Out: Functor, Applicative, Bundle, Unbundle, and Alternative
+# Inside-Out: Functor, Applicative, Alternative, Bundle, and Unbundle
 
 I was so close to changing the title of this session to `<$>`, `<*>`, and `<|>`. I'm kind of glad that I successfully resisted the strong but terrible temptation.
 
@@ -19,6 +19,8 @@ Indeed. Let's talk about the nuclear weapon: type classes.
 Rarely have I used metaphors in the titles. The *real* title should be "Type Classes and Constraints", but I simply can't resist the temptation again.
 
 Type classes implement ad-hoc polymorphism, also called function overloading, where the overloaded behaviors are different for each type.
+
+Type classes are **not** types; type classes are *constraints* on *types*. Beginners can easily make the mistake of placing constraints in the position of types. It's just wrong. `System` is a type; `KnownDomain dom` is a constraint; therefore, `KnownDomain System` holds. There are no means to replace `System` by `KnownDomain`. We can use `:info` to see what a name is; if it's `data` or `type`, then it's a type; if it's `class`, then it's a type class, or you can also call it a constraint.
 
 Again, we can start with small examples.
 
@@ -99,17 +101,94 @@ Ok, this is perhaps confusing. Let's invite the theorist.
 
 ## Theorist. Functor.
 
+The definition of `class` `Functor` is
 
+```haskell
+class Functor f where
+  fmap :: (a -> b) -> f a -> f b
+  (<$) :: a -> f b -> f a
+```
 
+and `<$>` is, in fact, just `fmap`:
 
+```console
+clashi> :i (<$>)
+(<$>) :: Functor f => (a -> b) -> f a -> f b
+        -- Defined in `Data.Functor'
+infixl 4 <$>
+```
 
+and here's an instance of `Functor (Maybe a)`:
 
+```haskell
+instance Functor (Maybe a) where
+  fmap g Nothing = Nothing
+  fmap g (Just x) = Just (g x)
+```
 
+When we are confused, it doesn't mean we don't remember what we've seen; we're just unable to interpret what we've seen. So here's a perspective to look at it.
 
+Things that are functors are containers that we can operate on. 
 
+For example, `Maybe`. Try in `clashi`:
 
+```console
+clashi> double x = 2 * x
+clashi> :type fmap double
+clashi> fmap double (Just 1)
+clashi> fmap double Nothing
+clashi> double <$> (Just 1)
+```
 
+`Maybe` is a container in the sense that it could contain something (or not). If you have a function that operates on the thing `a` that lives inside it, you can operate on `Maybe a` by `fmap`ping that function.
 
+Checkout the info of `Functor`; use google when necessary.
+
+```console
+clashi> :info Functor
+```
+
+You can see that many old friends of ours have implemented instances of `Functor`, which means you can use `<$>` on them.
+
+Questions?
+
+## Engineer. Apply `Functor` on `Signal`s.
+
+Since `Signal` is, in some sense, a container, it's also a `Functor`.
+
+Let's recall the examples above.
+
+> Suppose I have two wires `Signal dom (Unsigned 64)`, and I have a function
+
+```haskell
+double :: Unsigned 64 -> Unsigned 64
+double a = 2 * a
+-- double = (*) 2
+```
+
+> And I can reuse the pure function on wires!
+
+```haskell
+doubleWires :: (KnownDomain dom) =>
+  Signal dom (Unsigned 64) ->
+  Signal dom (Unsigned 64)
+doubleWires a = double <$> a
+-- doubleWires a = fmap double a
+```
+
+Nothing too hard, right?
+
+## Theorist. Applicative.
+
+## Engineer. Apply `Applicative` on`Signal`s.
+
+Let's recall the examples above.
+
+.. I guess continuously quoting myself is not a good habit, is it?
+
+## Theorist. Alternative.
+
+## Theorist. Bundle and Unbundle.
 
 
 

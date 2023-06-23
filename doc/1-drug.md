@@ -175,7 +175,7 @@ Many line breaks are identical to one. But indentations are necessary.
 
 Haskell has interesting decisions around layout (whitespaces, indentations, and line breaks). When refactoring the layout, do only what you know you're doing.
 
-What if I don't care once it's working? Well, just run the formatter.
+What if I don't care once it's working? Well, just run the formatter.x
 
 ## Architect. Formatting.
 
