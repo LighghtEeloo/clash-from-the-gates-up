@@ -74,11 +74,13 @@ Or recall `$`:
 longerThanLongerWire x = wire . wire . wire $ x
 ```
 
-And recall the eta law (or look at compiler's lintings):
+And recall the eta law (or look at compiler's lints):
 
 ```haskell
 longerThanLongerWire = wire . wire . wire
 ```
+
+It's OK if you don't know what the eta law is. It's not important - the compiler will catch it for you.
 
 ## Theorist. Infix Operators.
 
@@ -91,3 +93,9 @@ add x y = x + y
 1 `add` 2
 -- 3
 ```
+
+Kind of exciting, right? Can't wait to see how I can mess up the code base!
+
+## Architect. No, you don't.
+
+You should use operators with care and with caution. Check your thoughts on new operators with another teammate before using something too fancy. If your teammate can't follow your logic, try to avoid using it.

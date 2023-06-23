@@ -34,3 +34,7 @@ mealy' ::
 ## Engineer. I've got a reference answer.
 
 Check out [src/Ignite/Project.hs](../src/Ignite/Project.hs). No cheating! (Just kidding.)
+
+---
+
+Feel free to advance to the [next session](7-operator.md).
