@@ -1,4 +1,4 @@
-module Utils (monomorphizeEntity) where
+module Utils (monomorphizeEntity, (|>)) where
 
 import Clash.Prelude
 
@@ -10,3 +10,6 @@ monomorphizeEntity ::
   Enable dom ->
   r
 monomorphizeEntity e clock rst en = withClockResetEnable clock rst en e
+
+(|>) :: a -> (a -> b) -> b
+(|>) a f = f a

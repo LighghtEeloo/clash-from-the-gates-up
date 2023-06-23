@@ -60,6 +60,17 @@ id $ x + y
 
 That's it. That's how the most important operator in all FP languages works.
 
+## Theorist. `|>`.
+
+I made this up in the `Utils` module because I really like it.
+
+```haskell
+(|>) :: a -> (a -> b) -> b
+(|>) a f = f a
+```
+
+We'll see how it works in the next chapter.
+
 ## Theorist. `.`.
 
 `.` stands for function composition.
