@@ -229,7 +229,26 @@ There you got it.
 
 ## Theorist. Bundle and Unbundle.
 
+Is there a time when you want to turn `(Signal dom a, Signal dom b)` into `Signal dom (a, b)`?
 
+It's simple if you use `bundle`. Check it out yourself.
+
+```console
+clashi> a :: Signal System (Unsigned 64) = pure 1
+clashi> b :: Signal System (Unsigned 32) = pure 2
+clashi> c = bundle (a, b)
+clashi> :type c
+```
+
+And `unbundle` is just the other way around.
+
+```console
+clashi> (d, e) = unbundle c
+clashi> :type d
+clashi> :type e
+```
+
+You are ready for some real hardware code now. Get prepared and find a small exam for you in the next chapter : )
 
 ---
 
