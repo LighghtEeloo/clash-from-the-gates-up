@@ -37,9 +37,7 @@ I sincerely hope that you can enjoy this trip with the accompany of the three of
 ```
 - Compile Time Constants: KnownNat and SNat
 - Index
-
-Imperative Revisited: Monads and Monad Transformers
-
-The Unforgivably Convenient: Records and Baby Lens
 ```
 
+9. Imperative Revisited: Monads and Monad Transformers
+10. [The Unforgivably Convenient: Baby Records and Baby Lens](10-lens.md)

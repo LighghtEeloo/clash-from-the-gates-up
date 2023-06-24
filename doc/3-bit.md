@@ -16,6 +16,22 @@ Learn how to browse the website for documentation. For all entries, see:
 
 The topics are listed in the title. It's now your job to figure out what they are.
 
+## Engineer. Conversions.
+
+If you know the conversion won't cause precision loss, basically, the size of wires shouldn't go down, then feel free to do it; if not, treat it with great care.
+
+### `BitVector` to other data types
+
+```haskell
+bv :: (KnownNat n) => BitVector n
+
+unpack . slice $ bv
+```
+
+### Other data types to `BitVector`
+
+// Todo..
+
 ---
 
 Feel free to advance to the [next session](4-data.md).
