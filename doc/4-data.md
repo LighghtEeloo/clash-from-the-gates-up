@@ -92,6 +92,8 @@ Just 1
 Nothing
 ```
 
+Basically, you can place data constructors upfront, and place all arguments by order.
+
 To use it, or destruct it, is also easy:
 
 ```haskell
