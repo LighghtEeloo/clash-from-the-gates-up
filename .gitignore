@@ -42,3 +42,6 @@ cabal.config
 /vhdl
 /verilog
 /systemverilog
+
+# Personal settings
+/.vscode
