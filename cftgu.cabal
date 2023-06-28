@@ -84,11 +84,6 @@ library
   exposed-modules:
     DDFF.Project
     Fib.Project
-    Mult.Project
-    Mult.Staged
-    Mult2.Main
-    Mult2.Staged
-    ISR.Project
     Q.Project
     Utils
   other-modules:
